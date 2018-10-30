@@ -1,0 +1,69 @@
+/*mixins*/
+
+/*simplifying the transform property (browser compatibility)*/
+@mixin transform($property) {
+    -webkit-transform: $property;
+    -moz-transition: $property;
+    -ms-transform: $property;
+    -o-transition: $property;
+    transform: $property;
+}
+
+/*simplifying the transition property (browser compatibility)*/
+@mixin transition($property) {
+    -webkit-transition: $property;
+    -moz-transition: $property;
+    -ms-transition: $property;
+    -o-transition: $property;
+    transition: $property;
+}
+
+/*using absolute position to center the element (vertical, horizntal, area)*/
+@mixin center($position) {
+    position: absolute;
+    
+    @if $position == 'vertical' {
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+    @if $position == 'horizontal' {
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        -ms-transform: translateX(-50%);
+        transform: translate(-50%);
+    }
+    @if $position == 'area' {
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+}
+
+/*make a dom element unselectable by the user*/
+@mixin unselectable() {
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+/*custom scrollbar with given size*/
+@mixin custom-scrollbar($scrollbar-size) {
+    ::-webkit-scrollbar {
+        width: $scrollbar-size;
+        height: $scrollbar-size;
+    }
+    ::-webkit-scrollbar-thumb {
+        background: #26262644;
+        border-radius: 5px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: #26262688;
+    }
+}

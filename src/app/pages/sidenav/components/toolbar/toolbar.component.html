@@ -1,0 +1,23 @@
+<mat-toolbar color="primary">
+
+  <button mat-icon-button [@rotatedState]="innerToggleState" (click)="sidenavToggled()">
+    <mat-icon *ngIf="innerToggleState==='rotated'">arrow_forward</mat-icon>
+    <mat-icon *ngIf="innerToggleState==='default'">menu</mat-icon>
+  </button>
+
+  Appointments
+
+  <div class="flex-spacer" aria-label="spacer"></div>
+
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>account_circle</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <span class="dropdown-item">Settings</span>
+    </button>
+    <button mat-menu-item (click)="logout()">
+      <span class="dropdown-item">Logout</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>

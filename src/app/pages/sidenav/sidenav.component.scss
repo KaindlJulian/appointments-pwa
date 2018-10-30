@@ -1,0 +1,26 @@
+.sidenav-container {
+    position: absolute;
+    display: flex;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+}
+
+.sidenav-content {
+    height: 100%;
+    width: 100%;
+}
+
+.side-nav {
+    min-width: 250px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 600px) {
+    .sidenav-container {
+        top: 56px;
+    }
+}

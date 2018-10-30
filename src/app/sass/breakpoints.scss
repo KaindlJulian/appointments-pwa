@@ -1,0 +1,20 @@
+
+/*global breakpoints*/
+$xs:    4px;
+$s:     8px;
+$m:     16px;
+$ml:    24px;
+$l:     32px;
+$xl:    40px;
+$xxl:   64px;
+
+/*device size breakpoints*/
+$small: 720px;
+$medium: 1440px;
+$large: 1920px;
+
+/*classes*/
+%align-icon {
+    margin: 0 4px 3px 0;
+    vertical-align: middle;
+}

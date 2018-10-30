@@ -1,0 +1,11 @@
+<app-toolbar [toggleState]="sidenavOpened" (sideNavToggle)="sidenav.toggle()"></app-toolbar>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav #sidenav position="start" class="side-nav" [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="sidenavOpened">
+
+    <!--sidenav content-->
+    
+  </mat-sidenav>
+  <mat-sidenav-content class="sidenav-content" aria-label="main-content">
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

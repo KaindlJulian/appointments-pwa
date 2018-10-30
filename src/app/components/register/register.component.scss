@@ -1,0 +1,114 @@
+@import 'src/app/sass/breakpoints.scss';
+@import 'src/app/sass/mixins.scss';
+
+a {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+.page-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: url(/assets/login-bg.jpg);
+    background-size: cover;
+    /*because material2 applies padding on 600px to mat-card*/
+    mat-card {
+        padding: 24px !important;
+    }
+}
+
+/*form*/
+.form-logo {
+    $logo-width: 100px;
+    $logo-height: 100px;
+    width: $logo-width;
+    height: $logo-height;
+    img {
+        @include center('area');
+        width: $logo-width - 3px;
+        height: $logo-height - 3px;
+    }
+    border-radius: 50%;
+    margin: -100px auto $l !important;
+}
+
+.form-body {
+    min-width: 300px;
+    max-width: 370px;
+    min-height: 55%;
+    @include center('area');
+    background: #424242f4;
+    h1 {
+        text-align: center;
+    }
+}
+
+form {
+    width: 100%;
+    margin-top: $l;
+    font-size: 16px;
+    mat-form-field {
+        width: 100%;
+    }
+}
+
+.password-inputs {
+    margin-top: $m;
+}
+
+.have-account {
+    margin-top: $m;
+    text-align: center;
+    font-size: 12px;
+}
+
+.checkbox-group {
+    margin: $m 0 $l;
+}
+
+mat-checkbox {
+    margin: $m 0;
+    font-size: 14px;
+    line-height: 14px;
+    width: 100%;
+    color: #fff;
+}
+
+.checkbox-container {
+    margin: $s 0;
+}
+
+@media (max-width: 850px) {
+    .form-body {
+        margin-top: 230px;
+        top: 0;
+        @include center('horizontal');
+    }
+}
+
+@media (max-width: $small) {
+    .form-body {
+        margin-top: 150px;
+        position: relative;
+        max-width: 100%;
+    }
+    .form-logo {
+        display: none;
+    }
+    .page-container {
+        position: relative;
+        height: unset;
+        overflow: hidden;
+        mat-card {
+            margin: 0;
+            min-height: calc(100vh - 48px);
+            border-radius: 0;
+        }
+    }
+    .login-button-group {
+        margin-top: 116px !important;
+    }
+}
