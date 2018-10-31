@@ -15,12 +15,17 @@ const routes: Routes = [
     component: RegisterComponent
   },
   {
-    path: 'appointments',
+    path: 'home',
     component: SidenavComponent,
     canActivate: [AuthGuard],
     children: [
       {
         path: '',
+        pathMatch: 'full',
+        component: ListComponent
+      },
+      {
+        path: 'appointments',
         component: ListComponent
       }
     ]

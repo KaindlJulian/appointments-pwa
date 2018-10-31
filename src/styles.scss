@@ -3,13 +3,17 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+html {
+    background-color: #2f2f2f;
+}
+
 .flex-spacer {
     flex: 1 1 auto;
 }
 
 a {
     text-decoration: none;
-    color: #67a7d1;
+    color: #11bdf7;
 }
 
 a:hover {

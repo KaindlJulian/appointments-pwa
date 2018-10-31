@@ -1,13 +1,6 @@
 @import 'src/app/sass/breakpoints.scss';
 @import 'src/app/sass/mixins.scss';
 
-a {
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
-}
-
 .page-container {
     position: absolute;
     width: 100%;
@@ -60,7 +53,7 @@ form {
 }
 
 .have-account {
-    margin-top: $m;
+    margin-top: $l;
     text-align: center;
     font-size: 12px;
 }

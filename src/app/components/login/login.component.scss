@@ -2,9 +2,9 @@
 @import 'src/app/sass/mixins.scss';
 
 .page-container {
+    height: 100%;
     background-image: url(/assets/login-bg.jpg);
     background-size: cover;
-    height: 100%;
     /*because material2 applies padding on 600px to mat-card*/
     mat-card {
         padding: 24px !important;
@@ -96,7 +96,6 @@ form {
     text-align: center;
     mat-divider {
         position: relative;
-        border-top-color: hsla(0, 0%, 0%, 0.45);
     }
 }
 

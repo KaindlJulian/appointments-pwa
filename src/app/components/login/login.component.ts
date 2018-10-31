@@ -35,12 +35,12 @@ export class LoginComponent {
   async signIn() {
     if (this.emailFormControl.valid && this.passwordFormControl.valid) {
       await this.authService.signIn(this.emailFormControl.value, this.passwordFormControl.value);
-      this.router.navigate(['appointments']);
+      this.router.navigate(['home']);
     }
   }
 
   async signInGoogle() {
     await this.authService.googleLogin();
-    this.router.navigate(['appointments']);
+    this.router.navigate(['home']);
   }
 }
