@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
+import { Observable, BehaviorSubject, of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,14 @@ export class AuthService {
 
   authState: firebase.User = null;
 
+  user: Observable<firebase.User> = null;
+
+  private userToken;
+
   constructor(public fireAuth: AngularFireAuth) {
+    if (localStorage.getItem('user')) {
+      this.user = of(JSON.parse(localStorage.getItem('user')));
+    }
     fireAuth.authState.subscribe((auth) => {
       this.authState = auth;
       if (this.authenticated) {
@@ -24,9 +32,13 @@ export class AuthService {
 
   async googleLogin() {
     return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-      .then(() => {
+      .then(async () => {
         const provider = new firebase.auth.GoogleAuthProvider();
-        return firebase.auth().signInWithPopup(provider);
+        provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+        provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
+        const res = await firebase.auth().signInWithPopup(provider);
+        localStorage.setItem('user', JSON.stringify(res.user));
+        this.user = of(res.user);
       })
       .catch((error) => {
         console.log(error);
@@ -35,6 +47,10 @@ export class AuthService {
 
   async signIn(email: string, password: string) {
     return firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(res => {
+        localStorage.setItem('user', JSON.stringify(res.user));
+        this.user = of(res.user);
+      })
       .catch((error) => {
         console.log(error);
       });
@@ -47,8 +63,12 @@ export class AuthService {
       });
   }
 
+  async getProfileInfo() {
+  }
+
   logout() {
     localStorage.removeItem('userToken');
+    localStorage.removeItem('user');
     this.fireAuth.auth.signOut();
   }
 }

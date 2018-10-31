@@ -3,6 +3,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -25,12 +26,15 @@ export class SidenavComponent implements OnInit {
 
   @ViewChild(MatSidenav) sidenav: MatSidenav;
 
-  constructor(private router: Router, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(private router: Router, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private auth: AuthService) {
     this.mobileQuery = media.matchMedia('(max-width: 850px)');
     this._mobileQueryListener = () => {
       changeDetectorRef.detectChanges();
     };
     this.mobileQuery.addListener(this._mobileQueryListener);
+    this.auth.user.subscribe(u => {
+      console.log(u);
+    });
   }
 
   ngOnInit() {

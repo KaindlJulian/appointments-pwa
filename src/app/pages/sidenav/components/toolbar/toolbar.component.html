@@ -10,14 +10,24 @@
   <div class="flex-spacer" aria-label="spacer"></div>
 
   <button mat-icon-button [matMenuTriggerFor]="menu">
-    <mat-icon>account_circle</mat-icon>
+    <mat-icon *ngIf="!photoURL">account_circle</mat-icon>
+    <img *ngIf="photoURL" [src]="photoURL" alt="profile" height="26" class="profile-img">
   </button>
+
   <mat-menu #menu="matMenu">
     <button mat-menu-item>
-      <span class="dropdown-item">Settings</span>
+      <span class="dropdown-item"><strong>{{username}}</strong></span>
     </button>
     <button mat-menu-item (click)="logout()">
       <span class="dropdown-item">Logout</span>
     </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item matTooltip="Remove all Collections and Documents from Firestore" matTooltipPosition="left">
+      <span class="dropdown-item">Clear Firestore</span>
+    </button>
+    <button mat-menu-item matTooltip="Add random fake data to Firestore" matTooltipPosition="left">
+      <span class="dropdown-item">Populate Firestore</span>
+    </button>
+
   </mat-menu>
 </mat-toolbar>

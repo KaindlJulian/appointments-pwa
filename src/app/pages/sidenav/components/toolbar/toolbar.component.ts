@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, SimpleChanges, OnChange
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-toolbar',
@@ -23,9 +24,21 @@ export class ToolbarComponent implements OnInit, OnChanges {
 
   innerToggleState: String = 'default';
 
+  photoURL: String = null;
+  username: String = null;
+
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
+    this.authService.user.subscribe(u => {
+      this.photoURL = u.photoURL;
+
+      if (u.displayName) {
+        this.username = u.displayName;
+      } else {
+        this.username = u.email;
+      }
+    });
   }
 
   ngOnChanges(changes: SimpleChanges): void {

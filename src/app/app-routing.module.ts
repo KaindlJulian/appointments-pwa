@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginComponent, RegisterComponent } from './components';
 import { SidenavComponent } from './pages/sidenav/sidenav.component';
-import { ListComponent } from './pages/appointments/components';
+import { ListComponent, AppointmentComponent } from './pages/appointments/components';
 
 const routes: Routes = [
   {
@@ -31,8 +31,8 @@ const routes: Routes = [
     ]
   },
   {
-    path: '**',
-    redirectTo: 'login'
+    path: '',
+    component: LoginComponent
   }
 ];
 
