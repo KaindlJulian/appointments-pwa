@@ -1,0 +1,25 @@
+<mat-card class="appointment-list-item">
+  <mat-card-header>
+    <div mat-card-avatar class="header-image" [style.background-image]="cssPhotoURL"></div>
+    <mat-card-title>{{model.title}}</mat-card-title>
+    <mat-card-subtitle>Author: {{model.author.name}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <p>
+      {{model.body}}
+    </p>
+  </mat-card-content>
+  <mat-divider></mat-divider>
+  <mat-card-actions>
+    Attendees: 
+    <button mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+    </button>
+  </mat-card-actions>
+</mat-card>

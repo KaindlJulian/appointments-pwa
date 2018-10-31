@@ -1,7 +1,8 @@
 @import 'src/app/sass/breakpoints.scss';
 
 .fab {
-    position: absolute;
+    position: fixed;
     bottom: $l;
     right: $l;
 }
+
