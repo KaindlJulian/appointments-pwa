@@ -39,7 +39,12 @@ export class AuthService {
         provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
         provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
         const res = await firebase.auth().signInWithPopup(provider);
-        localStorage.setItem('user', JSON.stringify(res.user));
+        localStorage.setItem('user', JSON.stringify(res.user)); // maybe save session w/ service worker
+        const u = new User();
+        u.email = res.user.email;
+        u.name = res.user.displayName;
+        u.photoURL = res.user.photoURL;
+        this.userService.addUserWithId(u, res.user.uid);
         this.user = of(res.user);
       })
       .catch((error) => {
@@ -50,7 +55,7 @@ export class AuthService {
   async signIn(email: string, password: string) {
     return firebase.auth().signInWithEmailAndPassword(email, password)
       .then(res => {
-        localStorage.setItem('user', JSON.stringify(res.user));
+        localStorage.setItem('user', JSON.stringify(res.user)); // maybe save session w/ service worker
         this.user = of(res.user);
       })
       .catch((error) => {
@@ -63,7 +68,7 @@ export class AuthService {
       .then(res => {
         const u = new User();
         u.email = res.user.email;
-        u.name = res.user.displayName;
+        u.name = res.user.email.substr(0, res.user.email.indexOf('@'));
         u.photoURL = res.user.photoURL;
         this.userService.addUser(u);
       })

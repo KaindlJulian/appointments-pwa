@@ -2,7 +2,7 @@
     <img src="/src/assets/logo.svg" height="200">
 </p>
 
-# Appointments PWA
+# Appointments PWA [![Build Status](https://travis-ci.com/KaindlJulian/appointments-pwa.svg?token=mp2NSp7o4LF4zjnzTqDd&branch=master)](https://travis-ci.com/KaindlJulian/appointments-pwa)
 
 > Serverless Angular PWA using some Firebase and Angular 7 features
 

@@ -1,106 +1,111 @@
-@import 'src/app/sass/breakpoints.scss';
-@import 'src/app/sass/mixins.scss';
+@import "src/app/sass/breakpoints.scss";
+@import "src/app/sass/mixins.scss";
 
 .page-container {
-    height: 100%;
+  height: 100%;
 
-
-    /*because material2 applies padding on 600px to mat-card*/
-    mat-card {
-        padding: 24px !important;
-    }
+  /*because material2 applies padding on 600px to mat-card*/
+  mat-card {
+    padding: 24px !important;
+  }
 }
 
 /*form*/
 .form-logo {
-    $logo-width: 100px;
-    $logo-height: 100px;
-    width: $logo-width;
-    height: $logo-height;
-    img {
-        @include center('area');
-        width: $logo-width - 3px;
-        height: $logo-height - 3px;
-    }
-    border-radius: 50%;
-    margin: -100px auto $l !important;
+  $logo-width: 100px;
+  $logo-height: 100px;
+  width: $logo-width;
+  height: $logo-height;
+  img {
+    @include center("area");
+    width: $logo-width - 3px;
+    height: $logo-height - 3px;
+  }
+  border-radius: 50%;
+  margin: -100px auto $l !important;
 }
 
 .form-body {
-    min-width: 300px;
-    max-width: 370px;
-    min-height: 60%;
-    @include center('area');
-    h1 {
-        text-align: center;
-    }
-    background: #424242f4;
+  min-width: 300px;
+  max-width: 370px;
+  min-height: 60%;
+  @include center("area");
+  h1 {
+    text-align: center;
+  }
+  background: #424242f4;
 }
 
 @media (max-width: 850px) {
-    .form-body {
-        margin-top: 230px;
-        top: 0;
-        @include center('horizontal');
-    }
+  .form-body {
+    margin-top: 230px;
+    top: 0;
+    @include center("horizontal");
+  }
 }
 
 @media (max-width: $small) {
-    .form-body {
-        margin-top: 150px;
-        position: relative;
-        max-width: 100%;
+  .form-body {
+    margin-top: 150px;
+    position: relative;
+    max-width: 100%;
+  }
+  .form-logo {
+    display: none;
+  }
+  .page-container {
+    position: relative;
+    height: unset;
+    overflow: hidden;
+    mat-card {
+      margin: 0;
+      min-height: calc(100vh - 48px);
+      border-radius: 0;
     }
-    .form-logo {
-        display: none;
-    }
-    .page-container {
-        position: relative;
-        height: unset;
-        overflow: hidden;
-        mat-card {
-            margin: 0;
-            min-height: calc(100vh - 48px);
-            border-radius: 0;
-        }
-    }
-    .login-button-group {
-        margin-top: 116px !important;
-    }
+  }
 }
 
 form {
+  width: 100%;
+  margin-top: $l;
+  font-size: 16px;
+  mat-form-field {
     width: 100%;
-    margin-top: $l;
-    font-size: 16px;
-    mat-form-field {
-        width: 100%;
-    }
+  }
 }
 
 .password-forgotten {
-    text-align: right;
-    font-size: 12px;
-    margin-left: auto;
+  text-align: right;
+  font-size: 12px;
+  margin-left: auto;
 }
 
 .login-button-group {
-    margin: $xl auto;
+  margin: $xl auto;
 }
 
 .divider {
-    display: grid;
-    grid-template-columns: 45% 10% 45%;
-    margin: $l auto;
-    align-items: center;
-    text-align: center;
-    mat-divider {
-        position: relative;
-    }
+  display: grid;
+  grid-template-columns: 45% 10% 45%;
+  margin: $l auto;
+  align-items: center;
+  text-align: center;
+  mat-divider {
+    position: relative;
+  }
 }
 
 .create-account {
-    text-align: center;
-    font-size: 12px;
+  text-align: center;
+  font-size: 12px;
 }
 
+@media (max-width: $small) {
+  .create-account {
+    position: fixed;
+    width: 100vw;
+    bottom: 64px;
+    margin-left: -24px;
+    text-align: center;
+  }
+}

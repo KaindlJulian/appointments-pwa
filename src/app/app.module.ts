@@ -15,6 +15,8 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
 
 import { LoginComponent, RegisterComponent, LoginRegisterWrapperComponent } from './components';
+import { ContactsModule } from './pages/contacts/contacts.module';
+import { CalendarModule } from './pages/calendar/calendar.module';
 
 
 
@@ -37,6 +39,8 @@ import { LoginComponent, RegisterComponent, LoginRegisterWrapperComponent } from
     MaterialCoreModule,
     SidenavModule,
     AppointmentsModule,
+    ContactsModule,
+    CalendarModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],

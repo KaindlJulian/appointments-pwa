@@ -4,6 +4,8 @@ import { AuthGuard } from './guards/auth.guard';
 import { LoginRegisterWrapperComponent } from './components';
 import { SidenavComponent } from './pages/sidenav/sidenav.component';
 import { ListComponent } from './pages/appointments/components';
+import { ContactListComponent } from './pages/contacts/components';
+import { CalendarComponent } from './pages/calendar/components';
 
 const routes: Routes = [
   {
@@ -27,7 +29,15 @@ const routes: Routes = [
       {
         path: 'appointments',
         component: ListComponent
-      }
+      },
+      {
+        path: 'contacts',
+        component: ContactListComponent
+      },
+      {
+        path: 'calendar',
+        component: CalendarComponent
+      },
     ]
   },
   {

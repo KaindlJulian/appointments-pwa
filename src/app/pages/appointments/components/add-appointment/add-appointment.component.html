@@ -11,15 +11,36 @@
     <mat-form-field class="w-100">
       <textarea name="body" [(ngModel)]="bodyInput" class="textbox" matInput placeholder="Appointment description"></textarea>
     </mat-form-field>
+
+    <mat-form-field class="w-100">
+      <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Choose a date" [formControl]="dateFormControl">
+      <mat-error *ngIf="dateFormControl.hasError('required')">
+        Date is <strong>required</strong>
+      </mat-error>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+
+    <mat-form-field class="w-100">
+      <mat-chip-list #chipList>
+
+        <mat-chip *ngFor="let u of selectedUsers" selectable="false" removable="true" (removed)="remove(u)">
+          <img height="32" class="rounded" [src]="u.photoURL ? u.photoURL : '/assets/account.png'" alt="u.name">
+          {{u.name}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+
+        <input placeholder="Select attendees..." #userInput [formControl]="userCtrl" [matAutocomplete]="auto"
+          [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes" matChipInputAddOnBlur="true">
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let user of filteredUsers | async" [value]="user">
+          {{user.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
   </form>
-  <mat-form-field class="w-100">
-    <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Choose a date" [formControl]="dateFormControl">
-    <mat-error *ngIf="dateFormControl.hasError('required')">
-      Date is <strong>required</strong>
-    </mat-error>
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
 </div>
 <div mat-dialog-actions>
   <div class="flex-spacer" aria-label="spacer"></div>

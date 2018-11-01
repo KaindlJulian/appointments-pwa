@@ -39,7 +39,7 @@ export class RegisterComponent {
     if (this.emailFormControl.valid && this.checkedPrivacyTerms && this.passwordFormControl.valid) {
       this.authService.signUp(this.emailFormControl.value, this.passwordFormControl.value)
       .then(() => {
-        this.router.navigate(['home']);
+        this.navigateLogin.emit();
       });
     }
   }

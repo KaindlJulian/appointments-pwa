@@ -7,9 +7,24 @@ cdk-virtual-scroll-viewport {
 /*plain css animation to trigger on render*/
 .slide-left {
   animation: slide-left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
-  -webkit-animation: slide-left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  -webkit-animation: slide-left 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)
+    both;
 }
+
 @keyframes slide-left {
+  0% {
+    transform: translateX(100%) scale(0.1);
+    -webkit-transform: translateX(100%) scale(0.1);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    -webkit-transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-left-mobile {
   0% {
     transform: translateX(500px) scale(0.1);
     -webkit-transform: translateX(500px) scale(0.1);
@@ -19,6 +34,14 @@ cdk-virtual-scroll-viewport {
     transform: translateX(0) scale(1);
     -webkit-transform: translateX(0) scale(1);
     opacity: 1;
+  }
+}
+
+@media (max-width: $small) {
+  .slide-left {
+    animation: slide-left-mobile 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+    -webkit-animation: slide-left-mobile 0.3s
+      cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   }
 }
 

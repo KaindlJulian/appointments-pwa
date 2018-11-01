@@ -1,18 +1,21 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, MatAutocompleteSelectedEvent, MatAutocomplete, MatChipInputEvent } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
 import { Appointment } from 'src/app/models/appointment';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
-import { auth } from 'firebase';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { AppointmentService } from 'src/app/services/appointment.service';
+import { Observable, of } from 'rxjs';
+import { startWith, map, filter } from 'rxjs/operators';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-add-appointment',
   templateUrl: './add-appointment.component.html',
   styleUrls: ['./add-appointment.component.scss']
 })
-export class AddAppointmentComponent implements OnInit {
+export class AddAppointmentComponent {
 
   titleFormControl = new FormControl('', [
     Validators.required
@@ -26,13 +29,28 @@ export class AddAppointmentComponent implements OnInit {
 
   minDate = new Date();
 
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  users: User[];
+  selectedUsers: User[] = [];
+  filteredUsers: Observable<User[]>;
+  userCtrl = new FormControl();
+
+  @ViewChild('auto') matAutocomplete: MatAutocomplete;
+  @ViewChild('userInput') userInput: ElementRef<HTMLInputElement>;
+
+
 
   constructor(private authService: AuthService,
+    private userService: UserService,
     private appointmentService: AppointmentService,
     public dialogRef: MatDialogRef<AddAppointmentComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {
 
-  ngOnInit() {
+    this.users = this.userService.getAll();
+
+    this.filteredUsers = this.userCtrl.valueChanges.pipe(
+      startWith(null),
+      map((userName: string | null) => typeof userName === 'string' ? this._filter(userName) : this.users.slice()));
   }
 
   onNoClick(): void {
@@ -54,8 +72,34 @@ export class AddAppointmentComponent implements OnInit {
       });
 
       appointment.author = author;
+      appointment.attendees = this.selectedUsers;
       this.appointmentService.addAppointment(appointment);
     }
+    this.dialogRef.close();
   }
+
+
+  remove(user: User): void {
+    const index = this.selectedUsers.indexOf(user);
+
+    if (index >= 0) {
+      this.selectedUsers.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+
+    this.selectedUsers.push(event.option.value);
+    this.userInput.nativeElement.value = '';
+    this.userCtrl.setValue(null);
+  }
+
+  private _filter(userName: string): User[] {
+    console.log(userName);
+    const filterValue = userName.toLowerCase();
+
+    return this.users.filter(u => u.name.toLowerCase().indexOf(filterValue) === 0);
+  }
+
 
 }

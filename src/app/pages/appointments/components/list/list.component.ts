@@ -1,7 +1,7 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, empty } from 'rxjs';
 import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Appointment } from 'src/app/models/appointment';
@@ -92,10 +92,27 @@ export class ListComponent {
     return i;
   }
 
+  reload() {
+    const batchMap = this.offset.pipe(
+      throttleTime(500),
+      mergeMap(n => this.getBatch(null)),
+      scan((acc, batch) => {
+        return { ...acc, ...batch };
+      }, {})
+    );
+
+    this.batch = batchMap.pipe(
+      map(v => Object.values(v))
+    );
+  }
+
   openDialog() {
     this.dialog.open(AddAppointmentComponent, {
       data: {
       }
+    }).afterClosed().subscribe(() => {
+      setTimeout(() => this.reload(), 1000);
+
     });
   }
 }

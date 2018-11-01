@@ -1,33 +1,44 @@
-@import 'src/app/sass/breakpoints.scss';
+@import "src/app/sass/breakpoints.scss";
 
 mat-card-title {
-    max-height: 24px;
-    overflow: hidden;
+  max-height: 24px;
+  overflow: hidden;
 }
 
 .appointment-list-item {
-    margin: $m;
-
+  margin: $m;
 }
 
 .header-image {
-    background-size: cover;
+  background-size: cover;
 }
 
 .attendee-avatar {
-    border-radius: 50%;
-    height: 26px;
+  border-radius: 50%;
+  height: 26px;
 }
 
 .grow {
-    max-height: 52px;
-    min-height: 52px;
-    overflow: hidden;
+  max-height: 52px;
+  min-height: 52px;
+  overflow: hidden;
 }
 
 @media (max-width: $small) {
-    .grow {
-        max-height: 100px;
-        min-height: 100px;
-    }
+  .grow {
+    max-height: 100px;
+    min-height: 100px;
+  }
+}
+
+.rounded {
+  margin-right: 8px;
+  height: 26px;
+  width: 26px;
+  border-radius: 50%;
+  margin-left: -9px;
+}
+
+.spacer {
+    width: $m;
 }

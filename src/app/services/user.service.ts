@@ -8,15 +8,34 @@ import { User } from '../models/user';
 })
 export class UserService {
 
-  users: AngularFirestoreCollection<any>;
-  private userDoc: AngularFirestoreDocument<any>;
+  users: AngularFirestoreCollection;
+  private userDoc: AngularFirestoreDocument;
 
   constructor(private db: AngularFirestore) {
-    this.users = this.db.collection<any>('appointments');
+    this.users = this.db.collection('users');
   }
 
   addUser(user: User) {
-    // this.users.add(this.toObject(user));
+    this.users.add(this.toObject(user));
+  }
+
+  addUserWithId(user: User, uid: any) {
+    this.users.doc(uid).set(this.toObject(user));
+  }
+
+  getAll(): User[] {
+    const users: User[] = [];
+
+    this.users.ref.orderBy('name').get().then((snap) => {
+      snap.forEach(doc => {
+        const u = new User();
+        u.email = doc.data().email;
+        u.name = doc.data().name;
+        u.photoURL = doc.data().photoURL;
+        users.push(u);
+      });
+    });
+    return users;
   }
 
   updateAppointment(id, update: User) {

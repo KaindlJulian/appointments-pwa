@@ -35,9 +35,6 @@ export class SidenavComponent implements OnInit {
     if (!this.mobileQuery.matches) {
       this.sidenavOpened = true;
     }
-    this.auth.user.subscribe(u => {
-      console.log(u);
-    });
   }
 
   ngOnInit() {
@@ -51,6 +48,14 @@ export class SidenavComponent implements OnInit {
 
   navigateAppointments() {
     this.router.navigate(['/home', 'appointments']);
+  }
+
+  navigateContacts() {
+    this.router.navigate(['/home', 'contacts']);
+  }
+
+  navigateCalendar() {
+    this.router.navigate(['/home', 'calendar']);
   }
 
 }
