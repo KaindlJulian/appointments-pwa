@@ -10,19 +10,17 @@ export class AppointmentComponent implements OnInit {
 
   cssPhotoURL: String = null;
 
-  @Input() photoURL: String = '/assets/account.png';
-
   @Input() model: Appointment;
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
-    if (this.model) {
-      this.setPhoto(this.model.author.photoURL ? this.model.author.photoURL : '/assets/account.png');
-    }
+
+
   }
 
   setPhoto(path: String) {
+    console.log(path);
     this.cssPhotoURL = `url(${path})`;
   }
 }

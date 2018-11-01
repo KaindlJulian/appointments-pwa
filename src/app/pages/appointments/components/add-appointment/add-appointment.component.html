@@ -1,0 +1,28 @@
+<h1 mat-dialog-title>Add a new Appointment</h1>
+<div mat-dialog-content>
+  <form>
+    <mat-form-field class="w-100">
+      <input matInput placeholder="Title" [formControl]="titleFormControl">
+      <mat-error *ngIf="titleFormControl.hasError('required')">
+        Title is <strong>required</strong>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="w-100">
+      <textarea name="body" [(ngModel)]="bodyInput" class="textbox" matInput placeholder="Appointment description"></textarea>
+    </mat-form-field>
+  </form>
+  <mat-form-field class="w-100">
+    <input matInput [min]="minDate" [matDatepicker]="picker" placeholder="Choose a date" [formControl]="dateFormControl">
+    <mat-error *ngIf="dateFormControl.hasError('required')">
+      Date is <strong>required</strong>
+    </mat-error>
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <div class="flex-spacer" aria-label="spacer"></div>
+  <button mat-button (click)="onNoClick()">CANCEL</button>
+  <button mat-button (click)="onSubmit()">SUBMIT</button>
+</div>

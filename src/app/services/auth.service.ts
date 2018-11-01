@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
 import { Observable, BehaviorSubject, of } from 'rxjs';
+import { UserService } from './user.service';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class AuthService {
 
   private userToken;
 
-  constructor(public fireAuth: AngularFireAuth) {
+  constructor(public fireAuth: AngularFireAuth, private userService: UserService) {
     if (localStorage.getItem('user')) {
       this.user = of(JSON.parse(localStorage.getItem('user')));
     }
@@ -58,6 +60,13 @@ export class AuthService {
 
   async signUp(email: string, password: string) {
     return firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(res => {
+        const u = new User();
+        u.email = res.user.email;
+        u.name = res.user.displayName;
+        u.photoURL = res.user.photoURL;
+        this.userService.addUser(u);
+      })
       .catch((error) => {
         console.log(error);
       });

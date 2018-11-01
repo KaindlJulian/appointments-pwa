@@ -20,7 +20,10 @@ import {
   MatCheckboxModule,
   MatProgressBarModule,
   MatAutocompleteModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatDialogModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 } from '@angular/material';
 
 @NgModule({
@@ -47,7 +50,10 @@ import {
     MatExpansionModule,
     MatCheckboxModule,
     MatProgressBarModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class MaterialCoreModule { }

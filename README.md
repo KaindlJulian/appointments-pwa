@@ -1,36 +1,39 @@
-# AppointmentsPwa
+<p align="center">
+    <img src="/src/assets/logo.svg" height="200">
+</p>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.0.2.
+# Appointments PWA
 
-## Todo
+> Serverless Angular PWA using some Firebase and Angular 7 features
 
-- Login with google account, firebase auth
-- Create, Read, Update, Delete Appointments
-- Store them in firestore
-- Display all Appointments in a list
-- Add other Users to Appointments (either from database or google contacts)
+Website: https://appointments-pwa.firebaseapp.com
 
-## Development server
+## Firebase
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+- :fire: Authentication
+  - Email/Password
+  - Google
 
-## Code scaffolding
+- :fire: Firestore
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- :fire: Functions
 
-## Build
+- :fire: Hosting
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Virtual scrolling
 
-## Running unit tests
+To create a high performance realtime list which only renders elements that fit on the screen (similar to the Android RecyclerView that also only creates as much ViewHolders as needed). More about virtual scrolling [here](https://material.angular.io/cdk/scrolling/overview#virtual-scrolling).
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Getting started
 
-## Running end-to-end tests
+Clone the repository
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+> git clone https://github.com/KaindlJulian/appointments-pwa.git
 
-## Further help
+Install dependencies
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+> npm install
 
+Development server
+
+> ng serve --open

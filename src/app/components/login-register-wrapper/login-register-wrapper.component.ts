@@ -18,7 +18,5 @@ export class LoginRegisterWrapperComponent implements OnInit {
     } else if (  this.router.url.includes('register')) {
       this.displayLogin = false;
     }
-
   }
-
 }

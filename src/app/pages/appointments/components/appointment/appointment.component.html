@@ -1,6 +1,6 @@
 <mat-card class="appointment-list-item">
   <mat-card-header>
-    <div mat-card-avatar class="header-image" [style.background-image]="cssPhotoURL"></div>
+    <div mat-card-avatar class="header-image" [style.background-image]="'url('+ (model.author.photoURL ? model.author.photoURL : '/assets/account.png' )  + ')'"></div>
     <mat-card-title>{{model.title}}</mat-card-title>
     <mat-card-subtitle>Author: {{model.author.name}}</mat-card-subtitle>
   </mat-card-header>
@@ -11,7 +11,7 @@
   </mat-card-content>
   <mat-divider></mat-divider>
   <mat-card-actions>
-    Attendees: 
+    Attendees:
     <button mat-icon-button *ngFor="let a of model.attendees;">
       <img class="attendee-avatar" [src]="a.photoURL ? a.photoURL : '/assets/account.png'" alt="a.name">
     </button>

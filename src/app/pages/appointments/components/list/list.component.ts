@@ -4,8 +4,9 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
-
 import { Appointment } from 'src/app/models/appointment';
+import { MatDialog } from '@angular/material';
+import { AddAppointmentComponent } from '../add-appointment/add-appointment.component';
 
 // amount of items pulled from firestore
 const batchSize = 10;
@@ -28,10 +29,14 @@ export class ListComponent {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private db: AngularFirestore) {
-
+  constructor(
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
+    private db: AngularFirestore,
+    public dialog: MatDialog
+  ) {
     const batchMap = this.offset.pipe(
-      throttleTime(300),
+      throttleTime(500),
       mergeMap(n => this.getBatch(n)),
       scan((acc, batch) => {
         return { ...acc, ...batch };
@@ -57,7 +62,7 @@ export class ListComponent {
     const end = this.viewport.getRenderedRange().end;
     const total = this.viewport.getDataLength();
 
-    if (end === total) {
+    if (end >= total - 5) {
       this.offset.next(offset);
     }
   }
@@ -85,5 +90,12 @@ export class ListComponent {
 
   trackByIndex(i) {
     return i;
+  }
+
+  openDialog() {
+    this.dialog.open(AddAppointmentComponent, {
+      data: {
+      }
+    });
   }
 }
