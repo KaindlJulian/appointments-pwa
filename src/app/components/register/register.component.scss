@@ -3,10 +3,8 @@
 
 .page-container {
     position: absolute;
-    width: 100%;
     height: 100%;
-    background-image: url(/assets/login-bg.jpg);
-    background-size: cover;
+    width: 100%;
     /*because material2 applies padding on 600px to mat-card*/
     mat-card {
         padding: 24px !important;

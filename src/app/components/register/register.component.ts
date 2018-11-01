@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -17,6 +17,7 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class RegisterComponent {
 
+  @Output() navigateLogin: EventEmitter<void> = new EventEmitter<void>();
 
   hidePassword: Boolean = true;
 

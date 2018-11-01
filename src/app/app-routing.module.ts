@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
-import { LoginComponent, RegisterComponent } from './components';
+import { LoginRegisterWrapperComponent } from './components';
 import { SidenavComponent } from './pages/sidenav/sidenav.component';
-import { ListComponent, AppointmentComponent } from './pages/appointments/components';
+import { ListComponent } from './pages/appointments/components';
 
 const routes: Routes = [
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginRegisterWrapperComponent
   },
   {
     path: 'register',
-    component: RegisterComponent
+    component: LoginRegisterWrapperComponent
   },
   {
     path: 'home',
@@ -32,7 +32,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: LoginComponent
+    component: LoginRegisterWrapperComponent
   }
 ];
 

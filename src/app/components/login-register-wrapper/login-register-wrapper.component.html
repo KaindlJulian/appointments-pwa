@@ -1,0 +1,4 @@
+<div class="page-container" aria-label="fullscreen-main-content">
+  <app-login *ngIf="displayLogin" (navigateRegister)="displayLogin = false"></app-login>
+  <app-register *ngIf="!displayLogin" (navigateLogin)="displayLogin = true"></app-register>
+</div>

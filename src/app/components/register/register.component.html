@@ -43,7 +43,7 @@
       <button (click)="signUp()" mat-flat-button color="primary" class="w-100"> SIGN IN </button>
     </div>
     <p class="have-account">Already have an account ?
-      <a href="login">Sign In</a>
+      <a (click)="navigateLogin.emit()">Sign In</a>
     </p>
 
   </mat-card>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { AuthService } from 'src/app/services/auth.service';
@@ -16,6 +16,8 @@ import { Router } from '@angular/router';
   ]
 })
 export class LoginComponent {
+
+  @Output() navigateRegister: EventEmitter<void> = new EventEmitter<void>();
 
   emailFormControl = new FormControl('', [
     Validators.required,

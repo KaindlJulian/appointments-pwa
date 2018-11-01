@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './components/login/login.component';
 import { SidenavModule, AppointmentsModule } from './pages';
 import { MaterialCoreModule } from './material-core/material-core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,14 +13,17 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { environment } from '../environments/environment';
-import { RegisterComponent } from './components/register/register.component';
-import { ServiceWorkerModule } from '@angular/service-worker';
+
+import { LoginComponent, RegisterComponent, LoginRegisterWrapperComponent } from './components';
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginRegisterWrapperComponent
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
