@@ -5,21 +5,15 @@
     <mat-card-subtitle>Author: {{model.author.name}}</mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <p>
+    <p class="grow">
       {{model.body}}
     </p>
   </mat-card-content>
   <mat-divider></mat-divider>
   <mat-card-actions>
     Attendees: 
-    <button mat-icon-button>
-      <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
-    </button>
-    <button mat-icon-button>
-      <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
-    </button>
-    <button mat-icon-button>
-      <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+    <button mat-icon-button *ngFor="let a of model.attendees;">
+      <img class="attendee-avatar" [src]="a.photoURL ? a.photoURL : '/assets/account.png'" alt="a.name">
     </button>
   </mat-card-actions>
 </mat-card>

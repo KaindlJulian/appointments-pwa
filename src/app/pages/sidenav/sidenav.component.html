@@ -1,7 +1,7 @@
 <div [@fadeIn]>
   <app-toolbar [toggleState]="sidenavOpened" (sideNavToggle)="sidenav.toggle()"></app-toolbar>
   <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav position="start" class="side-nav" [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="sidenavOpened">
+    <mat-sidenav #sidenav position="start" class="side-nav" [mode]="mobileQuery.matches ? 'over' : 'side'" [opened]="mobileQuery.matches ? false : sidenavOpened">
 
       <mat-nav-list>
         <a mat-list-item (click)="navigateAppointments()">

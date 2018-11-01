@@ -18,7 +18,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class SidenavComponent implements OnInit {
 
-  sidenavOpened = true;
+  sidenavOpened;
 
   mobileQuery: MediaQueryList;
 
@@ -32,6 +32,9 @@ export class SidenavComponent implements OnInit {
       changeDetectorRef.detectChanges();
     };
     this.mobileQuery.addListener(this._mobileQueryListener);
+    if (!this.mobileQuery.matches) {
+      this.sidenavOpened = true;
+    }
     this.auth.user.subscribe(u => {
       console.log(u);
     });

@@ -1,8 +1,27 @@
-@import 'src/app/sass/breakpoints.scss';
+@import "src/app/sass/breakpoints.scss";
 
-.fab {
-    position: fixed;
-    bottom: $l;
-    right: $l;
+cdk-virtual-scroll-viewport {
+  height: 100%;
+  width: 100%;
 }
 
+/*plain css animation to trigger on render*/
+.slide-left {
+  animation: slide-left 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+@keyframes slide-left {
+  0% {
+    transform: translateX(100%) scale(0.1);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.fab {
+  position: fixed;
+  bottom: $l;
+  right: $l;
+}

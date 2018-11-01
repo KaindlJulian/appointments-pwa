@@ -1,26 +1,12 @@
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
+<ng-container *ngIf="batch | async as appointments">
 
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
-<app-appointment [model]="a"></app-appointment>
+<cdk-virtual-scroll-viewport [itemSize]="mobileQuery.matches ? 250 : 200" (scrolledIndexChange)="getNextBatch($event, (appointments[appointments.length - 1].date))">
 
+  <div class="slide-left" *cdkVirtualFor="let a of appointments; let i = index; trackBy: trackByIndex">
+    <app-appointment [model]="a"></app-appointment>
+  </div>
+
+</cdk-virtual-scroll-viewport>
 
 <button mat-fab class="fab">
   <mat-icon>add</mat-icon>

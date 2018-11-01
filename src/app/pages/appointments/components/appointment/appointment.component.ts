@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Appointment } from 'src/app/models/appointment';
-import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-appointment',
