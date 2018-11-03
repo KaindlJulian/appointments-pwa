@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate {
     if (localStorage.getItem('userToken')) {
       return true;
     }
-    if (this.authService.authenticated) {
+    if (this.authService.user) {
       return true;
     } else {
       console.log('access denied!');

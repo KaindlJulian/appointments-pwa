@@ -112,3 +112,15 @@ mat-checkbox {
 .login-button-group {
   margin: $xl auto;
 }
+
+@media (max-height: 800px) {
+  .form-body {
+    position: relative;
+    margin: 10% auto 0;
+    transform: none;
+    -webkit-transform: none;
+    background: #424242f4;
+    top: unset;
+    left: unset;
+  }
+}

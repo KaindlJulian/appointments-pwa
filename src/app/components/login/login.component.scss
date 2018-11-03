@@ -109,3 +109,15 @@ form {
     text-align: center;
   }
 }
+
+@media (max-height: 800px) {
+  .form-body {
+    position: relative;
+    margin: 9% auto 6%;
+    transform: none;
+    -webkit-transform: none;
+    background: #424242f4;
+    top: unset;
+    left: unset;
+  }
+} 

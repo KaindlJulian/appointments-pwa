@@ -4,21 +4,30 @@
 
 # Appointments PWA [![Build Status](https://travis-ci.com/KaindlJulian/appointments-pwa.svg?token=mp2NSp7o4LF4zjnzTqDd&branch=master)](https://travis-ci.com/KaindlJulian/appointments-pwa)
 
-> Serverless Angular PWA using some Firebase and Angular 7 features
+> Serverless Angular PWA using some Firebase features and Google APIs
 
 Website: https://appointments-pwa.firebaseapp.com
 
 ## Firebase
 
 - :fire: Authentication
-  - Email/Password
-  - Google
+    - Email/Password
+    - Google
 
 - :fire: Firestore
 
 - :fire: Functions
 
 - :fire: Hosting
+
+## Google APIS
+
+The Google login via firebase includes scopes for following Google APIs
+
+- People API (`/auth/calendar`)
+- Google Calendar API (`/contacts/readonly`)
+
+(also others like identity toolkip for basic profile informations from firebase by default)
 
 ## Virtual scrolling
 
