@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/services/auth.service';
+import { Contact } from 'src/app/models/contact';
 
 @Component({
   selector: 'app-contact-list',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ContactListComponent implements OnInit {
 
-  constructor() { }
+  contacts: Contact[] = [];
 
-  ngOnInit() {
+  constructor(private authService: AuthService) {
+
   }
 
+  async ngOnInit() {
+    this.contacts = await this.authService.getContacts();
+  }
 }

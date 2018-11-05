@@ -1,3 +1,15 @@
-<p>
-  calendar works!
-</p>
+<div class="container">
+  <h1>Calendar</h1>
+  <mat-divider></mat-divider>
+
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let e of events">
+      <h4 mat-line>{{e.title}}</h4>
+      <p mat-line *ngIf="e.startDate.toString() !== 'Invalid Date'"> {{e.startDate | date}} </p>
+
+      <a mat-icon-button target="_blank" rel="noopener noreferrer" [href]="e.htmlLink">
+        <mat-icon>open_in_new</mat-icon>
+      </a>
+    </mat-list-item>
+  </mat-list>
+</div>

@@ -52,12 +52,10 @@ export class SidenavComponent implements OnInit {
   }
 
   navigateContacts() {
-    this.auth.getContacts();
     this.router.navigate(['/home', 'contacts']);
   }
 
   navigateCalendar() {
-    this.auth.getCalendar();
     this.router.navigate(['/home', 'calendar']);
   }
 

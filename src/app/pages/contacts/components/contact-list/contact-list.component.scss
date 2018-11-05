@@ -1,0 +1,16 @@
+@import 'src/app/sass/breakpoints.scss';
+
+.container {
+    margin: $m; 
+}
+
+img {
+    border-radius: 50%;
+    margin-right: $s;
+    height: 26px;
+    width: 26px;
+}
+
+.email {
+    margin-left: $xs;
+}

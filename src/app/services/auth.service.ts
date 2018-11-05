@@ -4,7 +4,9 @@ import * as firebase from 'firebase/app';
 import { Observable, of } from 'rxjs';
 import { UserService } from './user.service';
 import { User } from '../models/user';
-import { environment } from 'src/environments/environment';
+import { CalendarEvent } from '../models/calendar-event';
+import { Contact } from '../models/contact';
+import { elementStart } from '@angular/core/src/render3';
 
 declare var gapi: any;
 
@@ -24,7 +26,6 @@ export class AuthService {
   }
 
   initClient() {
-    console.log(gapi);
     gapi.load('client', () => {
       gapi.client.init({
         apiKey: 'AIzaSyBbjUx3VlQc3IqbK8sttBhLXY6dT_BaeBc',
@@ -37,7 +38,7 @@ export class AuthService {
           'https://www.googleapis.com/auth/calendar https://www.googleapis.com/auth/contacts.readonly'
       });
       gapi.client.load('calendar', 'v3', () => console.log('calendar ready'));
-      //  gapi.client.load('people', 'v1', () => console.log('contacts ready'));
+      gapi.client.load('people', 'v1', () => console.log('contacts ready'));
     });
   }
 
@@ -100,20 +101,59 @@ export class AuthService {
       orderBy: 'startTime'
     });
 
-    return events.result.items;
+    return this.toEventArray(events.result.items);
   }
 
   async getContacts() {
-
     const people = await gapi.client.people.people.connections.list({
       'resourceName': 'people/me',
-      'personFields': 'names,emailAddresses',
+      'personFields': 'names,emailAddresses,photos',
       'sortOrder': 'FIRST_NAME_ASCENDING'
     });
 
-    console.log(people);
+    return this.toContactArray(people.result.connections);
+  }
 
-    return people.result.connections;
+  toContactArray(json: any): Contact[] {
+
+    const contacts: Contact[] = [];
+
+    json.forEach(element => {
+      const c = new Contact();
+      if (element.names) {
+        c.displayName = element.names[0].displayName;
+      }
+      if (element.emailAddresses) {
+        c.email = element.emailAddresses[0].value;
+      }
+      if (element.photos) {
+        c.photoURL = element.photos[0].url;
+      }
+      contacts.push(c);
+    });
+
+    console.log(contacts);
+
+    return contacts;
+  }
+
+  toEventArray(json: any): CalendarEvent[] {
+
+    const events: CalendarEvent[] = [];
+
+    json.forEach(element => {
+      const e = new CalendarEvent();
+      e.startDate = new Date(element.start.date);
+      e.endDate = new Date(element.end.date);
+      e.title = element.summary;
+      e.htmlLink = element.htmlLink;
+      events.push(e);
+    });
+
+    console.log(events);
+
+    return events;
+
   }
 
   logout() {

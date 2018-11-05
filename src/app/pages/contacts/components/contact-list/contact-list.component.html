@@ -1,3 +1,11 @@
-<p>
-  contact-list works!
-</p>
+<div class="container">
+  <h1>Contacts</h1>
+  <mat-divider></mat-divider>
+
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let c of contacts"> 
+      <img [src]="c.photoURL" alt="" height="26">
+      {{ c.displayName }}<p class="email" *ngIf="c.email">, {{ c.email }}</p>
+    </mat-list-item>
+  </mat-list>
+</div>
