@@ -6,7 +6,7 @@ import { UserService } from './user.service';
 import { User } from '../models/user';
 import { CalendarEvent } from '../models/calendar-event';
 import { Contact } from '../models/contact';
-import { elementStart } from '@angular/core/src/render3';
+import { AppModule } from '../app.module';
 
 declare var gapi: any;
 
@@ -67,7 +67,7 @@ export class AuthService {
 
   async signIn(email: string, password: string) {
     return firebase.auth().signInWithEmailAndPassword(email, password)
-      .then(res => {
+      .then((res: any) => {
         localStorage.setItem('user', JSON.stringify(res.user)); // maybe save session w/ service worker
         this.user = of(res.user);
       })
@@ -112,6 +112,32 @@ export class AuthService {
     });
 
     return this.toContactArray(people.result.connections);
+  }
+
+  async getUsers(user: firebase.User) {
+    return this.userService.getAll(user.uid);
+  }
+
+  async addCalendarEvent(event: CalendarEvent) {
+    const emails: { email: String }[] = [];
+    event.attendees.forEach(a => {
+      emails.push({ email: a.email });
+    });
+
+    const date = event.startDate as unknown as String;
+
+    await gapi.client.calendar.events.insert({
+      calendarId: 'primary',
+      summary: event.title,
+      description: event.description,
+      start: {
+        date: date.substr(0, date.indexOf('T'))
+      },
+      end: {
+        date: date.substr(0, date.indexOf('T'))
+      },
+      attendees: emails
+    });
   }
 
   toContactArray(json: any): Contact[] {
@@ -160,5 +186,11 @@ export class AuthService {
     localStorage.removeItem('userToken');
     localStorage.removeItem('user');
     this.fireAuth.auth.signOut();
+  }
+
+  parseDate(input) {
+    const parts = input.match(/(\d+)/g);
+    // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+    return new Date(parts[0], parts[1] - 1, parts[2]); // months are 0-based
   }
 }

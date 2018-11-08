@@ -18,8 +18,6 @@ import { LoginComponent, RegisterComponent, LoginRegisterWrapperComponent } from
 import { ContactsModule } from './pages/contacts/contacts.module';
 import { CalendarModule } from './pages/calendar/calendar.module';
 
-
-
 @NgModule({
   declarations: [
     AppComponent,

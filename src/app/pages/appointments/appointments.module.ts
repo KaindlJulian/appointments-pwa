@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MaterialCoreModule } from 'src/app/material-core/material-core.module';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
-import { ListComponent, AppointmentComponent, AddAppointmentComponent } from './components';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { MaterialCoreModule } from 'src/app/material-core/material-core.module';
+
+import {
+  ListComponent,
+  AppointmentComponent,
+  AddAppointmentComponent,
+  AddAttendeeComponent
+} from './components';
 
 @NgModule({
   imports: [
@@ -19,9 +25,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
   declarations: [
     ListComponent,
     AppointmentComponent,
-    AddAppointmentComponent],
+    AddAppointmentComponent,
+    AddAttendeeComponent
+  ],
   entryComponents: [
-    AddAppointmentComponent
+    AddAppointmentComponent,
+    AddAttendeeComponent
   ]
 })
 export class AppointmentsModule { }

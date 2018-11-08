@@ -31,7 +31,7 @@ export class ToolbarComponent implements OnInit, OnChanges {
   ngOnInit() {
     if (this.authService.user) {
       this.authService.user.subscribe(u => {
-        this.photoURL = u.photoURL;
+        this.photoURL = u.photoURL ? u.photoURL : null;
 
         if (u.displayName) {
           this.username = u.displayName;

@@ -1,12 +1,14 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { BehaviorSubject, Observable, empty } from 'rxjs';
-import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, tap, scan, mergeMap, throttleTime, last } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Appointment } from 'src/app/models/appointment';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddAppointmentComponent } from '../add-appointment/add-appointment.component';
+import { CalendarEvent } from 'src/app/models/calendar-event';
+import { AuthService } from 'src/app/services/auth.service';
 
 // amount of items pulled from firestore
 const batchSize = 10;
@@ -30,10 +32,12 @@ export class ListComponent {
   private _mobileQueryListener: () => void;
 
   constructor(
+    private authService: AuthService,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher,
     private db: AngularFirestore,
-    public dialog: MatDialog
+    public appointmentDialog: MatDialog,
+    public snackBar: MatSnackBar,
   ) {
     const batchMap = this.offset.pipe(
       throttleTime(500),
@@ -72,7 +76,7 @@ export class ListComponent {
       .collection('appointments', ref =>
         ref
           .orderBy('date')
-          .startAfter(lastSeenDate)
+          .startAfter(lastSeenDate ? lastSeenDate : new Date().toISOString())
           .limit(batchSize)
       )
       .snapshotChanges()
@@ -106,13 +110,27 @@ export class ListComponent {
     );
   }
 
-  openDialog() {
-    this.dialog.open(AddAppointmentComponent, {
+  addToCalendar(event: CalendarEvent) {
+    this.authService.addCalendarEvent(event);
+    this.openSnackBar('Event added to your Google Calendar');
+  }
+
+  addAttendeeToAppointment(appointment: Appointment) {
+    // show add attendee popup
+  }
+
+  openSnackBar(message: string) {
+    this.snackBar.open(message, '', {
+      duration: 1000
+    });
+  }
+
+  openAddAppointmentDialog() {
+    this.appointmentDialog.open(AddAppointmentComponent, {
       data: {
       }
     }).afterClosed().subscribe(() => {
       setTimeout(() => this.reload(), 1000);
-
     });
   }
 }

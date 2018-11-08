@@ -7,7 +7,11 @@
       <h4 mat-line>{{e.title}}</h4>
       <p mat-line *ngIf="e.startDate.toString() !== 'Invalid Date'"> {{e.startDate | date}} </p>
 
-      <a mat-icon-button target="_blank" rel="noopener noreferrer" [href]="e.htmlLink">
+
+      <a mat-icon-button matTooltip="Delete event">
+        <mat-icon>delete_forever</mat-icon>
+      </a>
+      <a mat-icon-button target="_blank" rel="noopener noreferrer" [href]="e.htmlLink" matTooltip="Open in Google Calendar">
         <mat-icon>open_in_new</mat-icon>
       </a>
     </mat-list-item>

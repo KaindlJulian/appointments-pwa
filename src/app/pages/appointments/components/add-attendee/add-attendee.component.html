@@ -1,0 +1,39 @@
+<div class="dialog">
+  <h1 mat-dialog-title>Add Attendees</h1>
+
+  <div mat-dialog-content>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Google Contacts
+          </mat-panel-title>
+          <mat-panel-description>
+            Add attendees from your google contacts
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Users
+          </mat-panel-title>
+          <mat-panel-description>
+            Add attendees from app users
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+  <div mat-dialog-actions>
+    <div class="flex-spacer" aria-label="spacer"></div>
+    <button mat-button (click)="onNoClick()">CANCEL</button>
+    <button mat-flat-button [mat-dialog-close]="'hi'" cdkFocusInitial color="primary">OK</button>
+  </div>
+</div>

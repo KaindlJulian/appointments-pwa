@@ -24,7 +24,8 @@ import {
   MatDialogModule,
   MatDatepickerModule,
   MatNativeDateModule,
-  MatChipsModule
+  MatChipsModule,
+  MatSnackBarModule
 } from '@angular/material';
 
 @NgModule({
@@ -36,6 +37,7 @@ import {
     MatToolbarModule,
     MatListModule,
     MatDividerModule,
+    MatSnackBarModule,
     MatMenuModule,
     MatIconModule,
     MatCardModule,
@@ -53,6 +55,7 @@ import {
     MatProgressBarModule,
     MatTooltipModule,
     MatDialogModule,
+    MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatChipsModule

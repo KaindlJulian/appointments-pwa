@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { User } from '../models/user';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -23,16 +24,18 @@ export class UserService {
     this.users.doc(uid).set(this.toObject(user));
   }
 
-  getAll(): User[] {
+  getAll(uid: string): User[] {
     const users: User[] = [];
 
     this.users.ref.orderBy('name').get().then((snap) => {
       snap.forEach(doc => {
-        const u = new User();
-        u.email = doc.data().email;
-        u.name = doc.data().name;
-        u.photoURL = doc.data().photoURL;
-        users.push(u);
+        if (doc.data().uid !== uid ? uid : '') {
+          const u = new User();
+          u.email = doc.data().email;
+          u.name = doc.data().name;
+          u.photoURL = doc.data().photoURL;
+          users.push(u);
+        }
       });
     });
     return users;

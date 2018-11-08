@@ -32,7 +32,9 @@ export class LoginComponent {
 
   hidePassword: Boolean = true;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService) {
+    localStorage.clear();
+  }
 
   async signIn() {
     if (this.emailFormControl.valid && this.passwordFormControl.valid) {

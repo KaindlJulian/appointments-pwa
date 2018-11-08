@@ -2,12 +2,12 @@
 
 <cdk-virtual-scroll-viewport [itemSize]="mobileQuery.matches ? 250 : 200" (scrolledIndexChange)="getNextBatch($event, (appointments[appointments.length - 1].date))">
 
-  <div class="slide-left" *cdkVirtualFor="let a of appointments; let i = index; trackBy: trackByIndex">
-    <app-appointment [model]="a"></app-appointment>
+  <div class="slide-left" *cdkVirtualFor="let appointment of appointments; let i = index; trackBy: trackByIndex">
+    <app-appointment [model]="appointment" (addCalendarEvent)="addToCalendar($event)" (addAttendee)="addAttendeeToAppointment(appointment)"></app-appointment>
   </div>
 
 </cdk-virtual-scroll-viewport>
 
-<button mat-fab class="fab" (click)="openDialog()">
+<button mat-fab class="fab" (click)="openAddAppointmentDialog()">
   <mat-icon>add</mat-icon>
 </button>

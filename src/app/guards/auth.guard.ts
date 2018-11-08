@@ -15,15 +15,10 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if (localStorage.getItem('userToken')) {
+    if (localStorage.getItem('user')) {
       return true;
     }
-    if (this.authService.user) {
-      return true;
-    } else {
-      console.log('access denied!');
-      this.router.navigate(['login']);
-      return false;
-    }
+    this.router.navigate(['login']);
+    return false;
   }
 }

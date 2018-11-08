@@ -39,6 +39,24 @@ mat-card-title {
   margin-left: -9px;
 }
 
+.rounded-icon {
+  margin-right: 8px;
+  margin-left: -9px;
+}
+
 .spacer {
     width: $m;
+}
+
+.add-event-btn {
+  margin-bottom: $m !important;
+}
+
+.calendar-icon {
+  margin-right: $xs;
+}
+
+.add-chip {
+  color: #424242;
+  background-color: #69f0ae;
 }

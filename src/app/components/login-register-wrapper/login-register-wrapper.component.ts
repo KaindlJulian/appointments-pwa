@@ -13,6 +13,7 @@ export class LoginRegisterWrapperComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    localStorage.clear();
     if (this.router.url.includes('login')) {
       this.displayLogin = true;
     } else if (  this.router.url.includes('register')) {

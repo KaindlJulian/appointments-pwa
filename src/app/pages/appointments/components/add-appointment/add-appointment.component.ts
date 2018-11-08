@@ -1,4 +1,4 @@
-import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef, MatAutocompleteSelectedEvent, MatAutocomplete, MatChipInputEvent } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
 import { Appointment } from 'src/app/models/appointment';
@@ -9,6 +9,7 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 import { Observable, of } from 'rxjs';
 import { startWith, map, filter } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-add-appointment',
@@ -38,19 +39,19 @@ export class AddAppointmentComponent {
   @ViewChild('auto') matAutocomplete: MatAutocomplete;
   @ViewChild('userInput') userInput: ElementRef<HTMLInputElement>;
 
-
-
   constructor(private authService: AuthService,
-    private userService: UserService,
     private appointmentService: AppointmentService,
     public dialogRef: MatDialogRef<AddAppointmentComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
-    this.users = this.userService.getAll();
-
-    this.filteredUsers = this.userCtrl.valueChanges.pipe(
-      startWith(null),
-      map((userName: string | null) => typeof userName === 'string' ? this._filter(userName) : this.users.slice()));
+    this.authService.user.subscribe(user => {
+      this.authService.getUsers(user).then(users => {
+        this.users = users;
+        this.filteredUsers = this.userCtrl.valueChanges.pipe(
+          startWith(null),
+          map((userName: string | null) => typeof userName === 'string' ? this._filter(userName) : this.users));
+      });
+    });
   }
 
   onNoClick(): void {
@@ -78,17 +79,14 @@ export class AddAppointmentComponent {
     this.dialogRef.close();
   }
 
-
   remove(user: User): void {
     const index = this.selectedUsers.indexOf(user);
-
     if (index >= 0) {
       this.selectedUsers.splice(index, 1);
     }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-
     this.selectedUsers.push(event.option.value);
     this.userInput.nativeElement.value = '';
     this.userCtrl.setValue(null);
@@ -97,9 +95,6 @@ export class AddAppointmentComponent {
   private _filter(userName: string): User[] {
     console.log(userName);
     const filterValue = userName.toLowerCase();
-
     return this.users.filter(u => u.name.toLowerCase().indexOf(filterValue) === 0);
   }
-
-
 }

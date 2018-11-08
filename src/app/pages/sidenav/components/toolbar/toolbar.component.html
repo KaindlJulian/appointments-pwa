@@ -15,8 +15,8 @@
   </button>
 
   <mat-menu #menu="matMenu">
-    <button mat-menu-item>
-      <span class="dropdown-item"><strong>{{username}}</strong></span>
+    <button mat-menu-item disableRipple="true" disabled>
+      <span class=""><strong>{{username}}</strong></span>
     </button>
     <button mat-menu-item (click)="logout()">
       <span class="dropdown-item">Logout</span>
