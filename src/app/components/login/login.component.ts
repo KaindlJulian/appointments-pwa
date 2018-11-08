@@ -3,6 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-login',
@@ -32,7 +33,7 @@ export class LoginComponent {
 
   hidePassword: Boolean = true;
 
-  constructor(private router: Router, private authService: AuthService) {
+  constructor(private router: Router, private authService: AuthService, public snackBar: MatSnackBar) {
     localStorage.clear();
   }
 
@@ -46,5 +47,13 @@ export class LoginComponent {
   async signInGoogle() {
     await this.authService.googleLogin();
     this.router.navigate(['home']);
+  }
+
+  sendResetMail() {
+    this.authService.sendResetPasswordEmail(this.emailFormControl.value).then(() => {
+      this.snackBar.open('Reset Email sent!', null, {
+        duration: 1000
+      });
+    });
   }
 }

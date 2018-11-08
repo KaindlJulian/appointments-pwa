@@ -179,7 +179,10 @@ export class AuthService {
     console.log(events);
 
     return events;
+  }
 
+  async sendResetPasswordEmail(email: string) {
+    firebase.auth().sendPasswordResetEmail(email);
   }
 
   logout() {
