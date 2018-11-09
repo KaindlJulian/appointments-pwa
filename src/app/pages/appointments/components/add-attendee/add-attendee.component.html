@@ -9,31 +9,59 @@
             Google Contacts
           </mat-panel-title>
           <mat-panel-description>
-            Add attendees from your google contacts
+            Select from your google contacts
           </mat-panel-description>
         </mat-expansion-panel-header>
-
-
+        <!-- autocomplete for chip list-->
+        <mat-form-field>
+          <input matInput placeholder="Select attendees..." #userInput [formControl]="userCtrl" [matAutocomplete]="autoC">
+        </mat-form-field>
+        <mat-autocomplete #autoC="matAutocomplete" (optionSelected)="selected($event)" removable="true" (removed)="remove(u)">
+          <mat-option *ngFor="let u of googleContacts" [value]="u">
+            {{u.name}}
+          </mat-option>
+        </mat-autocomplete>
       </mat-expansion-panel>
 
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title>
-            Users
+            Users&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </mat-panel-title>
           <mat-panel-description>
-            Add attendees from app users
+            Select from app users
           </mat-panel-description>
         </mat-expansion-panel-header>
-
-
+        <!-- autocomplete for chip list-->
+        <mat-form-field>
+          <input matInput placeholder="Select attendees..." #userInput [formControl]="userCtrl" [matAutocomplete]="auto">
+        </mat-form-field>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" removable="true" (removed)="remove(u)">
+          <mat-option *ngFor="let user of users" [value]="user">
+            {{user.name}}
+          </mat-option>
+        </mat-autocomplete>
       </mat-expansion-panel>
     </mat-accordion>
+    <!-- chip list of contacts + users as User[]-->
+    <mat-card class="chip-card">
+      <mat-card-header>
+        <mat-card-subtitle style="margin-left: -16px; color: #fff;">Selection</mat-card-subtitle>
+      </mat-card-header>
+      <mat-chip-list #chipList>
+        <mat-chip *ngFor="let u of selectedAttendees" selectable="false" removable="true" (removed)="remove(u)">
+          <img height="32" class="rounded" [src]="u.photoURL ? u.photoURL : '/assets/account.png'" alt="u.name">
+          {{u.name}}
+          <mat-icon matChipRemove>cancel</mat-icon>
+        </mat-chip>
+      </mat-chip-list>
+      <p class="info-text">Selected users will receive a notification or email</p>
+    </mat-card>
   </div>
 
   <div mat-dialog-actions>
     <div class="flex-spacer" aria-label="spacer"></div>
-    <button mat-button (click)="onNoClick()">CANCEL</button>
-    <button mat-flat-button [mat-dialog-close]="'hi'" cdkFocusInitial color="primary">OK</button>
+    <button class="cancel-btn" mat-button (click)="onNoClick()">CANCEL</button>
+    <button mat-flat-button [mat-dialog-close]="selectedAttendees" cdkFocusInitial color="primary">ADD</button>
   </div>
 </div>

@@ -86,7 +86,16 @@ export class ListComponent {
           return arr.reduce((acc, cur) => {
             const id = cur.payload.doc.id;
             const data = cur.payload.doc.data();
-            return { ...acc, [id]: data };
+            // data._id = id;
+            console.log(id);
+            const a = new Appointment();
+            a._id = id;
+            a.attendees = (data as any).attendees;
+            a.author = (data as any).author;
+            a.body = (data as any).body;
+            a.date = (data as any).date;
+            a.title = (data as any).title;
+            return { ...acc, [id]: a };
           }, {});
         })
       );
@@ -113,10 +122,6 @@ export class ListComponent {
   addToCalendar(event: CalendarEvent) {
     this.authService.addCalendarEvent(event);
     this.openSnackBar('Event added to your Google Calendar');
-  }
-
-  addAttendeeToAppointment(appointment: Appointment) {
-    // show add attendee popup
   }
 
   openSnackBar(message: string) {

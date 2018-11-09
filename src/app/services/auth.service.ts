@@ -141,9 +141,7 @@ export class AuthService {
   }
 
   toContactArray(json: any): Contact[] {
-
     const contacts: Contact[] = [];
-
     json.forEach(element => {
       const c = new Contact();
       if (element.names) {
@@ -157,16 +155,11 @@ export class AuthService {
       }
       contacts.push(c);
     });
-
-    console.log(contacts);
-
     return contacts;
   }
 
   toEventArray(json: any): CalendarEvent[] {
-
     const events: CalendarEvent[] = [];
-
     json.forEach(element => {
       const e = new CalendarEvent();
       e.startDate = new Date(element.start.date);
@@ -175,9 +168,6 @@ export class AuthService {
       e.htmlLink = element.htmlLink;
       events.push(e);
     });
-
-    console.log(events);
-
     return events;
   }
 

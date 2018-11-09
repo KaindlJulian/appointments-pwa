@@ -5,6 +5,8 @@ import { MatDialog } from '@angular/material';
 import { AddAttendeeComponent } from '../add-attendee/add-attendee.component';
 import { Contact } from 'src/app/models/contact';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
+import { AppointmentService } from 'src/app/services/appointment.service';
 
 @Component({
   selector: 'app-appointment',
@@ -19,7 +21,7 @@ export class AppointmentComponent {
 
   @Output() addCalendarEvent: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
-  constructor(public attendeeDialog: MatDialog) { }
+  constructor(public attendeeDialog: MatDialog, private appointmentService: AppointmentService) { }
 
   setPhoto(path: String) {
     console.log(path);
@@ -40,7 +42,10 @@ export class AppointmentComponent {
     const dialogRef = this.attendeeDialog.open(AddAttendeeComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log(result);
+        (result as User[]).forEach(u => {
+          this.model.attendees.push(u);
+        });
+        this.appointmentService.updateAppointment(this.model._id, this.model);
       }
     });
   }

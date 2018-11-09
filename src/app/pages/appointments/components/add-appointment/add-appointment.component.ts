@@ -49,7 +49,9 @@ export class AddAppointmentComponent {
         this.users = users;
         this.filteredUsers = this.userCtrl.valueChanges.pipe(
           startWith(null),
-          map((userName: string | null) => typeof userName === 'string' ? this._filter(userName) : this.users));
+          map((userName: string | null) => typeof userName === 'string' ?
+          this._filter(userName) :
+          this.users.filter((u) => !this.selectedUsers.includes(u))));
       });
     });
   }

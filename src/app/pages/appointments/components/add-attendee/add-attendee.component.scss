@@ -1,3 +1,27 @@
+@import 'src/app/sass/breakpoints.scss';
+
 .dialog {
-    min-width: 500px;
+    width: 600px;
+}
+
+.rounded {
+    margin-right: 8px;
+    height: 26px;
+    width: 26px;
+    border-radius: 50%;
+    margin-left: -9px;
+}
+
+.chip-card {
+    margin: $m 0;
+}
+
+.cancel-btn {
+    margin-right: $s;
+}
+
+.info-text {
+    font-size: 10px;
+    color: #ffffff88;
+    font-weight: 100;
 }

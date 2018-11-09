@@ -22,16 +22,14 @@ Website: https://appointments-pwa.firebaseapp.com
 
 ## Google APIS
 
-The Google login via firebase includes scopes for following Google APIs
+The Google login with the official js [client](https://developers.google.com/api-client-library/javascript/start/start-js) includes scopes for following Google APIs
 
 - People API (`/auth/calendar`)
 - Google Calendar API (`/contacts/readonly`)
 
-(also others like identity toolkip for basic profile informations from firebase by default)
-
 ## Virtual scrolling
 
-To create a high performance realtime list which only renders elements that fit on the screen (similar to the Android RecyclerView that also only creates as much ViewHolders as needed). More about virtual scrolling [here](https://material.angular.io/cdk/scrolling/overview#virtual-scrolling).
+To create a high performance realtime list which only renders elements that fit on the screen (similar to the Android RecyclerView that also only creates as much ViewHolders as needed). More [here](https://material.angular.io/cdk/scrolling/overview#virtual-scrolling).
 
 ## Getting started
 

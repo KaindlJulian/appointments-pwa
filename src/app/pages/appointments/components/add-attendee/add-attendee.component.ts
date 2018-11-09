@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { MatDialogRef, MatAutocompleteSelectedEvent } from '@angular/material';
 import { AuthService } from 'src/app/services/auth.service';
 
 import { Contact } from 'src/app/models/contact';
 import { User } from 'src/app/models/user';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-add-attendee',
@@ -12,8 +13,14 @@ import { User } from 'src/app/models/user';
 })
 export class AddAttendeeComponent implements OnInit {
 
-  googleContacts: Contact[];
+  userCtrl = new FormControl();
+
+  googleContacts: User[];
   users: User[];
+
+  selectedAttendees: User[] = new Array<User>();
+
+  @ViewChild('userInput') userInput: ElementRef<HTMLInputElement>;
 
   constructor(public dialogRef: MatDialogRef<AddAttendeeComponent>,
     private authService: AuthService
@@ -25,7 +32,7 @@ export class AddAttendeeComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getContacts().then(data => {
-      this.googleContacts = data;
+      this.googleContacts = this.googleContactToUser(data) as User[];
     });
     this.authService.user.subscribe(user => {
       this.authService.getUsers(user).then(data => {
@@ -34,4 +41,40 @@ export class AddAttendeeComponent implements OnInit {
     });
   }
 
+  googleContactToUser(googleContacts: Contact[] | Contact): User[] | User {
+    if (!Array.isArray(googleContacts)) {
+      const u = new User();
+      u.name = googleContacts.displayName;
+      u.email = googleContacts.email;
+      u.photoURL = googleContacts.photoURL;
+      u.uid = null;
+      return u;
+    }
+    const converted: User[] = [];
+    googleContacts.forEach(g => {
+      const u = new User();
+      u.name = g.displayName;
+      u.email = g.email;
+      u.photoURL = g.photoURL;
+      u.uid = null;
+      converted.push(u);
+    });
+    return converted;
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    const u: User = event.option.value;
+    if (!this.selectedAttendees.includes(u)) {
+      this.selectedAttendees.push(u);
+    }
+    this.userInput.nativeElement.value = '';
+    this.userCtrl.setValue(null);
+  }
+
+  remove(user: User): void {
+    const index = this.selectedAttendees.indexOf(user);
+    if (index >= 0) {
+      this.selectedAttendees.splice(index, 1);
+    }
+  }
 }
