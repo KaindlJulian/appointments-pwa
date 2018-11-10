@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { MatDialogRef, MatAutocompleteSelectedEvent } from '@angular/material';
+import { Component, OnInit, ViewChild, ElementRef, Inject, AfterViewInit, AfterViewChecked } from '@angular/core';
+import { MatDialogRef, MatAutocompleteSelectedEvent, MAT_DIALOG_DATA } from '@angular/material';
 import { AuthService } from 'src/app/services/auth.service';
 
 import { Contact } from 'src/app/models/contact';
 import { User } from 'src/app/models/user';
 import { FormControl } from '@angular/forms';
+import { Appointment } from 'src/app/models/appointment';
 
 @Component({
   selector: 'app-add-attendee',
@@ -22,7 +23,9 @@ export class AddAttendeeComponent implements OnInit {
 
   @ViewChild('userInput') userInput: ElementRef<HTMLInputElement>;
 
-  constructor(public dialogRef: MatDialogRef<AddAttendeeComponent>,
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public model: Appointment,
+    public dialogRef: MatDialogRef<AddAttendeeComponent>,
     private authService: AuthService
   ) { }
 
@@ -32,11 +35,20 @@ export class AddAttendeeComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getContacts().then(data => {
-      this.googleContacts = this.googleContactToUser(data) as User[];
+      this.googleContacts = (this.googleContactToUser(data) as User[]).filter(u => {
+        this.model.attendees.forEach(ma => {
+          if (ma.email === u.email) {
+            return false;
+          }
+        });
+        return true;
+      });
     });
     this.authService.user.subscribe(user => {
       this.authService.getUsers(user).then(data => {
-        this.users = data;
+        data.forEach(u => {
+          this.users = data;
+        });
       });
     });
   }

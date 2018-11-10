@@ -44,7 +44,9 @@ delete (appointment: Appointment) {
 }
 
 openAddAttendeeDialog() {
-  const dialogRef = this.attendeeDialog.open(AddAttendeeComponent);
+  const dialogRef = this.attendeeDialog.open(AddAttendeeComponent, {
+    data: this.model
+  });
   dialogRef.afterClosed().subscribe(result => {
     if (result) {
       (result as User[]).forEach(u => {

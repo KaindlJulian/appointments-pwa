@@ -80,17 +80,8 @@ mat-checkbox {
   margin: $s 0;
 }
 
-@media (max-width: 850px) {
-  .form-body {
-    margin-top: 230px;
-    top: 0;
-    @include center("horizontal");
-  }
-}
-
 @media (max-width: $small) {
   .form-body {
-    margin-top: 150px;
     position: relative;
     max-width: 100%;
   }
@@ -109,18 +100,36 @@ mat-checkbox {
   }
 }
 
+.spacer {
+  display: none;
+}
+
 .login-button-group {
   margin: $xl auto;
 }
 
-@media (max-height: 800px) {
+@media (max-height: 760px) {
+  .page-container {
+    display: flex;
+    flex-direction: row;
+  }
   .form-body {
     position: relative;
-    margin: 10% auto 0;
+    flex: 0 1 auto;
+    height: 100%;
+    top: 0;
+    left: 0;
     transform: none;
     -webkit-transform: none;
-    background: #424242f4;
-    top: unset;
-    left: unset;
+  }
+  .spacer {
+    display: block;
+    flex: 1 1 auto;
+  }
+  .form-logo {
+    background: none;
+    border: none;
+    box-shadow: none;
+    margin: $m auto 0 !important;
   }
 }

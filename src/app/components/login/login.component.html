@@ -1,56 +1,59 @@
 <div class="page-container" aria-label="fullscreen-main-content">
+  <div class="spacer"></div>
   <!--LoginForm-->
   <mat-card [@fadeInUp] class="form-body">
     <mat-card class="form-logo">
       <img src="/assets/logo.svg" alt="logo">
     </mat-card>
-    <h1>Sign In to your Account</h1>
-    <!--Form-->
-    <form>
-      <mat-form-field class="example-full-width">
-        <input name="email" matInput placeholder="Email" [formControl]="emailFormControl">
-        <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
-          Please enter a valid email address
-        </mat-error>
-        <mat-error *ngIf="emailFormControl.hasError('required')">
-          Email is
-          <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
+    <div class="background">
+      <h1>Sign In to your Account</h1>
+      <!--Form-->
+      <form>
+        <mat-form-field class="example-full-width">
+          <input name="email" matInput placeholder="Email" [formControl]="emailFormControl">
+          <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="emailFormControl.hasError('required')">
+            Email is
+            <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field>
-        <input name="password" [formControl]="passwordFormControl" matInput placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'">
-        <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
-        <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
-          Password must be at least 6 characters long
-        </mat-error>
-        <mat-error *ngIf="passwordFormControl.hasError('required')">
-          Password is
-          <strong>required</strong>
-        </mat-error>
-      </mat-form-field>
-    </form>
-    <!--/Form-->
-    <!--Actions-->
-    <p class="password-forgotten">
-      <a (click)="sendResetMail()">Forgot your Password?</a>
-    </p>
-    <div class="login-button-group">
-      <button (click)="signIn()" mat-flat-button color="primary" class="w-100"> SIGN IN </button>
+        <mat-form-field>
+          <input name="password" [formControl]="passwordFormControl" matInput placeholder="Enter your password" [type]="hidePassword ? 'password' : 'text'">
+          <mat-icon matSuffix (click)="hidePassword = !hidePassword">{{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+          <mat-error *ngIf="passwordFormControl.hasError('minlength') && !passwordFormControl.hasError('required')">
+            Password must be at least 6 characters long
+          </mat-error>
+          <mat-error *ngIf="passwordFormControl.hasError('required')">
+            Password is
+            <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <!--/Form-->
+      <!--Actions-->
+      <p class="password-forgotten">
+        <a (click)="sendResetMail()">Forgot your Password?</a>
+      </p>
+      <div class="login-button-group">
+        <button (click)="signIn()" mat-flat-button color="primary" class="w-100"> SIGN IN </button>
 
-      <div class="divider">
-        <mat-divider></mat-divider>OR
-        <mat-divider></mat-divider>
+        <div class="divider">
+          <mat-divider></mat-divider>OR
+          <mat-divider></mat-divider>
+        </div>
+
+        <button (click)="signInGoogle()" mat-flat-button class="w-100">
+          <img src="/assets/google.svg" alt="google" height="20px"> SIGN IN WITH GOOGLE
+        </button>
       </div>
-
-      <button (click)="signInGoogle()" mat-flat-button class="w-100">
-        <img src="/assets/google.svg" alt="google" height="20px"> SIGN IN WITH GOOGLE
-      </button>
+      <p class="create-account">Don't have an account?
+        <a (click)="navigateRegister.emit()">Create Account</a>
+      </p>
+      <!--/Actions-->
     </div>
-    <p class="create-account">Don't have an account?
-      <a (click)="navigateRegister.emit()">Create Account</a>
-    </p>
-    <!--/Actions-->
   </mat-card>
   <!--/LoginForm-->
 </div>

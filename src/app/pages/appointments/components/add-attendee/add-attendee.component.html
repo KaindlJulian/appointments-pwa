@@ -16,7 +16,7 @@
         <mat-form-field>
           <input matInput placeholder="Select attendees..." #userInput [formControl]="userCtrl" [matAutocomplete]="autoC">
         </mat-form-field>
-        <mat-autocomplete #autoC="matAutocomplete" (optionSelected)="selected($event)" removable="true" (removed)="remove(u)">
+        <mat-autocomplete #autoC="matAutocomplete" (optionSelected)="selected($event)" removable="true">
           <mat-option *ngFor="let u of googleContacts" [value]="u">
             {{u.name}}
           </mat-option>
@@ -36,7 +36,7 @@
         <mat-form-field>
           <input matInput placeholder="Select attendees..." #userInput [formControl]="userCtrl" [matAutocomplete]="auto">
         </mat-form-field>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" removable="true" (removed)="remove(u)">
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)" removable="true">
           <mat-option *ngFor="let user of users" [value]="user">
             {{user.name}}
           </mat-option>

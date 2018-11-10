@@ -23,6 +23,14 @@ cdk-virtual-scroll-viewport {
   }
 }
 
+.loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: unset !important;
+}
+
 .fab {
   position: fixed;
   bottom: $l;

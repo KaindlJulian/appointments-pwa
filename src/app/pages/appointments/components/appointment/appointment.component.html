@@ -18,9 +18,12 @@
         <img class="rounded" [src]="a.photoURL ? a.photoURL : '/assets/account.png'" alt="a.name">
         {{ a.name }}
       </mat-chip>
-      <mat-chip class="add-chip" matTooltip="Add a user to this appointment" matTooltipPosition="right" (click)="openAddAttendeeDialog()">
-        <mat-icon>person_add</mat-icon>
-      </mat-chip>
+      <ng-container *ngIf="user$ | async as user">
+        <mat-chip *ngIf="user.email === model.author.email" class="add-chip" (click)="openAddAttendeeDialog()"
+          matTooltip="Add users to this appointment" matTooltipPosition="right">
+          <mat-icon>person_add</mat-icon>
+        </mat-chip>
+      </ng-container>
     </mat-chip-list>
     <div class="btn-group">
       <button color="accent" mat-stroked-button (click)="addClicked(model)" class="add-event-btn">
@@ -34,7 +37,7 @@
           <mat-icon>delete</mat-icon>
         </button>
       </ng-container>
-      
+
     </div>
 
   </mat-card-actions>

@@ -5,7 +5,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, tap, scan, mergeMap, throttleTime, last } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Appointment } from 'src/app/models/appointment';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MatDialog, MatSnackBar, MatSpinner } from '@angular/material';
 import { AddAppointmentComponent } from '../add-appointment/add-appointment.component';
 import { CalendarEvent } from 'src/app/models/calendar-event';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,6 +19,8 @@ const batchSize = 10;
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent {
+
+  isLoading = true;
 
   @ViewChild(CdkVirtualScrollViewport)
   viewport: CdkVirtualScrollViewport;
@@ -39,12 +41,18 @@ export class ListComponent {
     public appointmentDialog: MatDialog,
     public snackBar: MatSnackBar,
   ) {
+
     const batchMap = this.offset.pipe(
       throttleTime(500),
       mergeMap((n: Date) => this.getBatch(n)),
       scan((acc, batch) => {
         return { ...acc, ...batch };
-      }, {})
+      }, {}),
+      tap(_ => {
+        if (this.batch !== null) {
+          this.isLoading = false;
+        }
+      })
     );
 
     this.batch = batchMap.pipe(
@@ -104,6 +112,7 @@ export class ListComponent {
   }
 
   reload() {
+    this.isLoading = true;
     this.offset.next(new Date().toISOString());
     const batchMap = this.offset.pipe(
       throttleTime(500),
@@ -116,7 +125,7 @@ export class ListComponent {
     this.batch = batchMap.pipe(
       map(v => Object.values(v))
     );
-
+    this.isLoading = false;
   }
 
   removeFromList(appointment: Appointment) {

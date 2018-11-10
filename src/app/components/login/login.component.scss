@@ -36,19 +36,13 @@
   background: #424242f4;
 }
 
-@media (max-width: 850px) {
-  .form-body {
-    margin-top: 230px;
-    top: 0;
-    @include center("horizontal");
-  }
-}
-
 @media (max-width: $small) {
   .form-body {
     margin-top: 150px;
     position: relative;
-    max-width: 100%;
+  }
+  .spacer {
+    display: none;
   }
   .form-logo {
     display: none;
@@ -57,8 +51,9 @@
     position: relative;
     height: unset;
     overflow: hidden;
+    height: 100vh;
     mat-card {
-      margin: 0;
+      margin: 0 auto;
       min-height: calc(100vh - 48px);
       border-radius: 0;
     }
@@ -110,14 +105,32 @@ form {
   }
 }
 
-@media (max-height: 800px) {
+.spacer {
+  display: none;
+}
+
+@media (max-height: 760px) {
+  .page-container {
+    display: flex;
+    flex-direction: row;
+  }
   .form-body {
     position: relative;
-    margin: 9% auto 6%;
+    flex: 0 1 auto;
+    height: 100%;
+    top: 0;
+    left: 0;
     transform: none;
     -webkit-transform: none;
-    background: #424242f4;
-    top: unset;
-    left: unset;
   }
-} 
+  .spacer {
+    display: block;
+    flex: 1 1 auto;
+  }
+  .form-logo {
+    background: none;
+    border: none;
+    box-shadow: none;
+    margin: $m auto 0 !important;
+  }
+}
