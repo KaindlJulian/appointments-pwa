@@ -12,18 +12,30 @@
   </mat-card-content>
 
   <mat-card-actions *ngIf="model.attendees">
-    <button color="accent" mat-button (click)="addClicked(model)" class="add-event-btn">
-      <mat-icon class="calendar-icon">library_add</mat-icon>
-      Add to your Calendar
-    </button>
+
     <mat-chip-list>
       <mat-chip *ngFor="let a of model.attendees;">
         <img class="rounded" [src]="a.photoURL ? a.photoURL : '/assets/account.png'" alt="a.name">
         {{ a.name }}
       </mat-chip>
       <mat-chip class="add-chip" matTooltip="Add a user to this appointment" matTooltipPosition="right" (click)="openAddAttendeeDialog()">
-        <mat-icon class="">person_add</mat-icon>
+        <mat-icon>person_add</mat-icon>
       </mat-chip>
     </mat-chip-list>
+    <div class="btn-group">
+      <button color="accent" mat-stroked-button (click)="addClicked(model)" class="add-event-btn">
+        <mat-icon class="calendar-icon">library_add</mat-icon>
+        Add to your Calendar
+      </button>
+
+      <ng-container *ngIf="user$ | async as user">
+        <button *ngIf="user.email === model.author.email" color="warn" mat-stroked-button (click)="delete(model)" class="delete-event-btn"
+          matTooltip="Delete appointment from list" matTooltipPosition="right">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </ng-container>
+      
+    </div>
+
   </mat-card-actions>
 </mat-card>

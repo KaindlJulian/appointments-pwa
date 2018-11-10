@@ -7,6 +7,7 @@ import { Contact } from 'src/app/models/contact';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-appointment',
@@ -15,43 +16,42 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 })
 export class AppointmentComponent {
 
-  cssPhotoURL: String = null;
+  user$: Observable<firebase.User>;
 
   @Input() model: Appointment;
 
   @Output() addCalendarEvent: EventEmitter<CalendarEvent> = new EventEmitter<CalendarEvent>();
 
-  constructor(public attendeeDialog: MatDialog, private appointmentService: AppointmentService) { }
+  @Output() deleted: EventEmitter<void> = new EventEmitter<void>();
 
-  setPhoto(path: String) {
-    console.log(path);
-    this.cssPhotoURL = `url(${path})`;
-  }
+  constructor(public attendeeDialog: MatDialog, private appointmentService: AppointmentService, private authService: AuthService) {
+    this.user$ = this.authService.user;
+}
 
-  addClicked(event: Appointment) {
-    const calendarEvt: CalendarEvent = new CalendarEvent();
-    calendarEvt.title = event.title;
-    calendarEvt.description = event.body;
-    calendarEvt.startDate = event.date;
-    calendarEvt.endDate = event.date;
-    calendarEvt.attendees = event.attendees;
-    this.addCalendarEvent.emit(calendarEvt);
-  }
+addClicked(event: Appointment) {
+  const calendarEvt: CalendarEvent = new CalendarEvent();
+  calendarEvt.title = event.title;
+  calendarEvt.description = event.body;
+  calendarEvt.startDate = event.date;
+  calendarEvt.endDate = event.date;
+  calendarEvt.attendees = event.attendees;
+  this.addCalendarEvent.emit(calendarEvt);
+}
 
-  openAddAttendeeDialog() {
-    const dialogRef = this.attendeeDialog.open(AddAttendeeComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        (result as User[]).forEach(u => {
-          this.model.attendees.push(u);
-        });
-        this.appointmentService.updateAppointment(this.model._id, this.model);
-      }
-    });
-  }
+delete (appointment: Appointment) {
+  this.appointmentService.deleteAppointment(appointment._id);
+  this.deleted.emit();
+}
 
-  googleContactToUser(googleContacts: Contact[]): User[] {
-    const converted: User[] = [];
-    return converted;
-  }
+openAddAttendeeDialog() {
+  const dialogRef = this.attendeeDialog.open(AddAttendeeComponent);
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      (result as User[]).forEach(u => {
+        this.model.attendees.push(u);
+      });
+      this.appointmentService.updateAppointment(this.model._id, this.model);
+    }
+  });
+}
 }

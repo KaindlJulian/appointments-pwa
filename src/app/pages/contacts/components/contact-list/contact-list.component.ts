@@ -11,9 +11,7 @@ export class ContactListComponent implements OnInit {
 
   contacts: Contact[] = [];
 
-  constructor(private authService: AuthService) {
-
-  }
+  constructor(private authService: AuthService) { }
 
   async ngOnInit() {
     this.contacts = await this.authService.getContacts();

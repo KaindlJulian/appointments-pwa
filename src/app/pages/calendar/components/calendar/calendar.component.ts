@@ -14,7 +14,13 @@ export class CalendarComponent implements OnInit {
   constructor(private authService: AuthService) { }
 
   async ngOnInit() {
-    this.events = await this.authService.getCalendar();
+    this.authService.getCalendar().then(data => {
+      this.events = data;
+    });
   }
 
+  deleteEvent(id: String) {
+    this.authService.removeCalendarEvent(id.toString());
+    this.events = this.events.filter(e => e.id !== id);
+  }
 }

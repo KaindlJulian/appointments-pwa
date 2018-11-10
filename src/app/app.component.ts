@@ -8,15 +8,13 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
 
   ngOnInit() {
-    Notification.requestPermission((status) => {
+    Notification.requestPermission().then((status) => {
       if (status === 'granted') {
-        navigator.serviceWorker.ready.then((registration) => {
-          registration.showNotification('Welcome!', {
-            icon: '../../assets/notification-icon.png',
-            dir: 'auto',
-            body: 'We will let you know when something important happens 👍',
-            tag: 'welcome-message'
-          });
+        const welcome = new Notification('Welcome!', {
+          icon: '../../assets/notification-icon.png',
+          dir: 'auto',
+          body: 'We will let you know when something important happens 👍',
+          tag: 'welcome-message'
         });
       }
     });

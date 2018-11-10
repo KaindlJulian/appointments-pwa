@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
-import { Observable, of } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { UserService } from './user.service';
 import { User } from '../models/user';
 import { CalendarEvent } from '../models/calendar-event';
@@ -25,8 +25,8 @@ export class AuthService {
     this.user = fireAuth.authState;
   }
 
-  initClient() {
-    gapi.load('client', () => {
+  async initClient() {
+    await gapi.load('client', () => {
       gapi.client.init({
         apiKey: 'AIzaSyBbjUx3VlQc3IqbK8sttBhLXY6dT_BaeBc',
         clientId: '563436927369-ea0e6tmm624hsl3t00pml407ph16blfp.apps.googleusercontent.com',
@@ -100,7 +100,6 @@ export class AuthService {
       maxResults: 20,
       orderBy: 'startTime'
     });
-
     return this.toEventArray(events.result.items);
   }
 
@@ -110,7 +109,6 @@ export class AuthService {
       'personFields': 'names,emailAddresses,photos',
       'sortOrder': 'FIRST_NAME_ASCENDING'
     });
-
     return this.toContactArray(people.result.connections);
   }
 
@@ -140,6 +138,13 @@ export class AuthService {
     });
   }
 
+  async removeCalendarEvent(id: string) {
+    await gapi.client.calendar.events.delete({
+      calendarId: 'primary',
+      eventId: id
+    });
+  }
+
   toContactArray(json: any): Contact[] {
     const contacts: Contact[] = [];
     json.forEach(element => {
@@ -166,6 +171,7 @@ export class AuthService {
       e.endDate = new Date(element.end.date);
       e.title = element.summary;
       e.htmlLink = element.htmlLink;
+      e.id = element.id;
       events.push(e);
     });
     return events;

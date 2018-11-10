@@ -6,9 +6,7 @@
     <mat-list-item role="listitem" *ngFor="let e of events">
       <h4 mat-line>{{e.title}}</h4>
       <p mat-line *ngIf="e.startDate.toString() !== 'Invalid Date'"> {{e.startDate | date}} </p>
-
-
-      <a mat-icon-button matTooltip="Delete event">
+      <a mat-icon-button matTooltip="Delete event" (click)="deleteEvent(e.id)">
         <mat-icon>delete_forever</mat-icon>
       </a>
       <a mat-icon-button target="_blank" rel="noopener noreferrer" [href]="e.htmlLink" matTooltip="Open in Google Calendar">

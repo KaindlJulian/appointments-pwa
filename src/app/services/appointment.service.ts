@@ -15,6 +15,7 @@ export class AppointmentService {
   }
 
   addAppointment(appointment: Appointment) {
+    console.log(this.toObject(appointment));
     this.appointments.add(this.toObject(appointment));
   }
 

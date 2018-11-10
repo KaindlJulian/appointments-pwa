@@ -17,6 +17,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
   styleUrls: ['./add-appointment.component.scss']
 })
 export class AddAppointmentComponent {
+  user: firebase.User;
 
   titleFormControl = new FormControl('', [
     Validators.required
@@ -45,13 +46,16 @@ export class AddAppointmentComponent {
     @Inject(MAT_DIALOG_DATA) public data: any) {
 
     this.authService.user.subscribe(user => {
+      this.user = user;
+
       this.authService.getUsers(user).then(users => {
         this.users = users;
         this.filteredUsers = this.userCtrl.valueChanges.pipe(
-          startWith(null),
           map((userName: string | null) => typeof userName === 'string' ?
-          this._filter(userName) :
-          this.users.filter((u) => !this.selectedUsers.includes(u))));
+            this._filter(userName) :
+            this.users.filter((u) => !this.selectedUsers.includes(u))
+          )
+        );
       });
     });
   }
@@ -68,14 +72,13 @@ export class AddAppointmentComponent {
       appointment.date = this.dateFormControl.value;
 
       const author = new User();
-      await this.authService.user.toPromise().then(u => {
-        author.email = u.email;
-        author.name = u.displayName;
-        author.photoURL = u.photoURL;
-      });
+      author.email = this.user.email;
+      author.name = this.user.displayName ? this.user.displayName : this.user.email.substr(0, this.user.email.indexOf('@'));
+      author.photoURL = this.user.photoURL;
 
       appointment.author = author;
       appointment.attendees = this.selectedUsers;
+
       this.appointmentService.addAppointment(appointment);
     }
     this.dialogRef.close();
@@ -95,7 +98,6 @@ export class AddAppointmentComponent {
   }
 
   private _filter(userName: string): User[] {
-    console.log(userName);
     const filterValue = userName.toLowerCase();
     return this.users.filter(u => u.name.toLowerCase().indexOf(filterValue) === 0);
   }

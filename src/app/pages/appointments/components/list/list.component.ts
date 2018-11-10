@@ -41,7 +41,7 @@ export class ListComponent {
   ) {
     const batchMap = this.offset.pipe(
       throttleTime(500),
-      mergeMap(n => this.getBatch(n)),
+      mergeMap((n: Date) => this.getBatch(n)),
       scan((acc, batch) => {
         return { ...acc, ...batch };
       }, {})
@@ -66,8 +66,8 @@ export class ListComponent {
     const end = this.viewport.getRenderedRange().end;
     const total = this.viewport.getDataLength();
 
-    if (end >= total - 5) {
-      this.offset.next(offset);
+    if (end >= total - 3) {
+      this.offset.next(offset as Date);
     }
   }
 
@@ -86,14 +86,12 @@ export class ListComponent {
           return arr.reduce((acc, cur) => {
             const id = cur.payload.doc.id;
             const data = cur.payload.doc.data();
-            // data._id = id;
-            console.log(id);
             const a = new Appointment();
             a._id = id;
             a.attendees = (data as any).attendees;
             a.author = (data as any).author;
             a.body = (data as any).body;
-            a.date = (data as any).date;
+            a.date = ((data as any).date);
             a.title = (data as any).title;
             return { ...acc, [id]: a };
           }, {});
@@ -106,9 +104,10 @@ export class ListComponent {
   }
 
   reload() {
+    this.offset.next(new Date().toISOString());
     const batchMap = this.offset.pipe(
       throttleTime(500),
-      mergeMap(n => this.getBatch(null)),
+      mergeMap(n => this.getBatch(n)),
       scan((acc, batch) => {
         return { ...acc, ...batch };
       }, {})
@@ -117,6 +116,11 @@ export class ListComponent {
     this.batch = batchMap.pipe(
       map(v => Object.values(v))
     );
+
+  }
+
+  removeFromList(appointment: Appointment) {
+    this.reload();
   }
 
   addToCalendar(event: CalendarEvent) {
