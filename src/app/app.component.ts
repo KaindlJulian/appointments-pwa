@@ -10,7 +10,7 @@ export class AppComponent implements OnInit {
 
   message;
 
-  constructor(private msgService: MessagingService) { }
+  constructor() { }
 
   ngOnInit() {
 

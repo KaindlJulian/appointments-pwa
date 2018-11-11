@@ -6,6 +6,7 @@ import { SidenavComponent } from './pages/sidenav/sidenav.component';
 import { ListComponent } from './pages/appointments/components';
 import { ContactListComponent } from './pages/contacts/components';
 import { CalendarComponent } from './pages/calendar/components';
+import { NotificationComponent } from './pages/sidenav/components';
 
 const routes: Routes = [
   {
@@ -40,6 +41,7 @@ const routes: Routes = [
       },
     ]
   },
+  {path: 'test', component: NotificationComponent},
   {
     path: '',
     component: LoginRegisterWrapperComponent

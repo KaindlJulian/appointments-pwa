@@ -1,9 +1,10 @@
 import { Component, OnInit, ChangeDetectorRef, ViewChild, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { MatSidenav } from '@angular/material';
+import { MatSidenav, MatSnackBar } from '@angular/material';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { Router } from '@angular/router';
 import { MessagingService } from 'src/app/services/messaging.service';
+import { NotificationComponent } from './components';
 
 @Component({
   selector: 'app-sidenav',
@@ -26,7 +27,11 @@ export class SidenavComponent implements OnInit {
 
   @ViewChild(MatSidenav) sidenav: MatSidenav;
 
-  constructor(private router: Router, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private msgService: MessagingService) {
+  constructor(private router: Router,
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
+    private msgService: MessagingService,
+    public snackBar: MatSnackBar) {
     this.mobileQuery = media.matchMedia('(max-width: 850px)');
     this._mobileQueryListener = () => {
       changeDetectorRef.detectChanges();
@@ -47,8 +52,15 @@ export class SidenavComponent implements OnInit {
 
     this.msgService.requestPermission();
     this.msgService.receiveMessage();
-    this.msgService.currentMessage.subscribe(m => console.log(m));
-
+    this.msgService.currentMessage.subscribe(message => {
+      if (message) {
+        this.snackBar.openFromComponent(NotificationComponent, {
+          data: message.notification,
+          duration: 5000,
+          panelClass: ['dark-snackbar'],
+        });
+      }
+    });
   }
 
   navigateAppointments() {
@@ -64,3 +76,5 @@ export class SidenavComponent implements OnInit {
   }
 
 }
+
+

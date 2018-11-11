@@ -1,12 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
 interface User {
     uid: any;
     name: String;
@@ -36,6 +30,7 @@ export const fcmUserAddedToAppointment = functions.database.ref('appointments').
             icon: appointment.author.photoURL ?
                 appointment.author.photoURL :
                 'https://firebasestorage.googleapis.com/v0/b/appointments-pwa.appspot.com/o/notification-icon.png?alt=media&token=4aa7f55c-9ce5-4e56-b712-ed45eb70e0a9',
+            click_action: 'https://appointments-pwa.firebaseapp.com'
         }
     }
     console.log(notification)

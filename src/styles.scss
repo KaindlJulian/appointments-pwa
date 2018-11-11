@@ -31,6 +31,10 @@ a:hover {
   width: 100%;
 }
 
+.dark-snackbar {
+  background-color: #424242; 
+}
+
 @media (min-width: 720px) {
   ::-webkit-scrollbar {
     width: 12px;
