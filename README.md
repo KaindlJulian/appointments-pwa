@@ -11,7 +11,7 @@
 Website: https://appointments-pwa.firebaseapp.com
 
 ## System 
-<img src="docs/architecture.svg" alt="system-architecture" height="500">
+<img src="docs/system-architecture.svg" alt="system-architecture" height="500">
 
 ## Firebase
 
