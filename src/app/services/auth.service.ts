@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import * as firebase from 'firebase/app';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { UserService } from './user.service';
 import { User } from '../models/user';
 import { CalendarEvent } from '../models/calendar-event';
 import { Contact } from '../models/contact';
-import { AppModule } from '../app.module';
 
 declare var gapi: any;
 

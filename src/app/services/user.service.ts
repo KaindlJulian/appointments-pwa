@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestoreCollection, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 import { User } from '../models/user';
-import { AuthService } from './auth.service';
-
 
 @Injectable({
   providedIn: 'root'
@@ -34,6 +32,7 @@ export class UserService {
           u.email = doc.data().email;
           u.name = doc.data().name;
           u.photoURL = doc.data().photoURL;
+          u.uid = doc.data().uid;
           users.push(u);
         }
       });

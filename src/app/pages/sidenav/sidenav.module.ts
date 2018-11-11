@@ -9,7 +9,7 @@ import { MaterialCoreModule } from 'src/app/material-core/material-core.module';
   imports: [
     CommonModule,
     RouterModule,
-    MaterialCoreModule
+    MaterialCoreModule,
   ],
   declarations: [SidenavComponent, ToolbarComponent]
 })

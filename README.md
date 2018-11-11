@@ -1,8 +1,9 @@
 <p align="center">
     <img src="/src/assets/logo.svg" height="200">
 </p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Empty.png" height="16px">
 
-# Appointments PWA [![Build Status](https://travis-ci.com/KaindlJulian/appointments-pwa.svg?token=mp2NSp7o4LF4zjnzTqDd&branch=master)](https://travis-ci.com/KaindlJulian/appointments-pwa)
+# Appointments PWA [![Build Status](https://travis-ci.com/KaindlJulian/appointments-pwa.svg?token=mp2NSp7o4LF4zjnzTqDd&branch=master)](https://travis-ci.com/KaindlJulian/appointments-pwa) [![Depfu](https://badges.depfu.com/badges/d5e9d1941ab5667c4d92cc4341b78177/count.svg)](https://depfu.com/github/KaindlJulian/appointments-pwa?project_id=6290)
 
 > Serverless Angular PWA using some Firebase features and Google APIs
 
@@ -10,17 +11,18 @@ Website: https://appointments-pwa.firebaseapp.com
 
 ## Firebase
 
-- :fire: Authentication
+- :fire: [Authentication](https://firebase.google.com/docs/auth/)
     - Email/Password
     - Google
 
-- :fire: Firestore
+- <div>🔥<a href="https://firebase.google.com/docs/firestore/">Firestore  &#946;</a></div>
 
-- :fire: Functions
+- :fire: [Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/)
+    - :fire: [Functions](https://firebase.google.com/docs/functions/) (to send push notifications)
 
-- :fire: Hosting
+- :fire: [Hosting](https://firebase.google.com/docs/hosting/)
 
-## Google APIS
+## Google APIs
 
 The Google login with the official js [client](https://developers.google.com/api-client-library/javascript/start/start-js) includes scopes for following Google APIs
 

@@ -35,20 +35,11 @@ export class AddAttendeeComponent implements OnInit {
 
   ngOnInit() {
     this.authService.getContacts().then(data => {
-      this.googleContacts = (this.googleContactToUser(data) as User[]).filter(u => {
-        this.model.attendees.forEach(ma => {
-          if (ma.email === u.email) {
-            return false;
-          }
-        });
-        return true;
-      });
+      this.googleContacts = (this.googleContactToUser(data) as User[]);
     });
     this.authService.user.subscribe(user => {
       this.authService.getUsers(user).then(data => {
-        data.forEach(u => {
-          this.users = data;
-        });
+        this.users = data;
       });
     });
   }

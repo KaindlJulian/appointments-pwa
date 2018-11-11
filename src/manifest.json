@@ -1,9 +1,10 @@
 {
   "name": "Appointments",
   "short_name": "Appointments",
+  "gcm_sender_id": "103953800507",
   "theme_color": "#7f51a2",
   "background_color": "#2f2f2f",
-  "description": "App that lets you manage you appointments.",
+  "description": "App that lets you manage you appointments",
   "dir": "ltr",
   "lang": "en-US",
   "display": "standalone",

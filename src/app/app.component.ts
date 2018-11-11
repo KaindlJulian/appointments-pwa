@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessagingService } from './services/messaging.service';
 
 @Component({
   selector: 'app-root',
@@ -7,16 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
+  message;
+
+  constructor(private msgService: MessagingService) { }
+
   ngOnInit() {
-    Notification.requestPermission().then((status) => {
-      if (status === 'granted') {
-        const welcome = new Notification('Welcome!', {
-          icon: '../../assets/notification-icon.png',
-          dir: 'auto',
-          body: 'We will let you know when something important happens 👍',
-          tag: 'welcome-message'
-        });
-      }
-    });
+
   }
 }

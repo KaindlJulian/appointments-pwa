@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SidenavModule, AppointmentsModule } from './pages';
 import { MaterialCoreModule } from './material-core/material-core.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
@@ -17,6 +16,9 @@ import { environment } from '../environments/environment';
 import { LoginComponent, RegisterComponent, LoginRegisterWrapperComponent } from './components';
 import { ContactsModule } from './pages/contacts/contacts.module';
 import { CalendarModule } from './pages/calendar/calendar.module';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { SidenavModule } from './pages/sidenav/sidenav.module';
+import { AppointmentsModule } from './pages/appointments/appointments.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +31,7 @@ import { CalendarModule } from './pages/calendar/calendar.module';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    AngularFireMessagingModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
