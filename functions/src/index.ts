@@ -17,8 +17,9 @@ interface Appointment {
     attendees: User[];
 }
 
-export const fcmUserAddedToAppointment = functions.database.ref('appointments').onCreate(event => {
-    const appointment: Appointment = event.val();
+export const fcmUserAddedToAppointment = functions.firestore.document('appointments').onCreate(event => {
+    console.log('test');
+    const appointment: Appointment = event.data() as Appointment;
     console.log(appointment);
 
     const attendeeUids: string[] = appointment.attendees.map(a => a.uid);

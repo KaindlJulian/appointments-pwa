@@ -65,14 +65,17 @@ export class SidenavComponent implements OnInit {
 
   navigateAppointments() {
     this.router.navigate(['/home', 'appointments']);
+    this.sidenav.close();
   }
 
   navigateContacts() {
     this.router.navigate(['/home', 'contacts']);
+    this.sidenav.close();
   }
 
   navigateCalendar() {
     this.router.navigate(['/home', 'calendar']);
+    this.sidenav.close();
   }
 
 }

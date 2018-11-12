@@ -14,3 +14,9 @@ img {
 .email {
     margin-left: $xs;
 }
+
+@media (max-width: $small) {
+    .email {
+        display: none;
+    }
+}
