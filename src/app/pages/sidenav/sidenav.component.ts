@@ -56,7 +56,7 @@ export class SidenavComponent implements OnInit {
       if (message) {
         this.snackBar.openFromComponent(NotificationComponent, {
           data: message.notification,
-          duration: 5000,
+          duration: 1000,
           panelClass: ['dark-snackbar'],
         });
       }

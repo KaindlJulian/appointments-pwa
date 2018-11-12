@@ -1,6 +1,8 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
+admin.initializeApp();
+
 interface User {
     uid: any;
     name: String;
@@ -17,13 +19,16 @@ interface Appointment {
     attendees: User[];
 }
 
-export const fcmUserAddedToAppointment = functions.firestore.document('appointments').onCreate(event => {
-    console.log('test');
-    const appointment: Appointment = event.data() as Appointment;
-    console.log(appointment);
-
+/**
+ * cloud function that listens for create events on the appointments collection and sends a cloud messaging push notification to all attendees
+ */
+export const firebasCloudMsgPushNotification = functions.firestore.document('appointments/{appointmentId}').onCreate((snap, context) => {
+    const appointment = snap.data() as Appointment;
     const attendeeUids: string[] = appointment.attendees.map(a => a.uid);
 
+    /**
+     * composing the notification
+     */
     const notification = {
         notification: {
             title: `You were added to: "${appointment.title}"`,
@@ -34,18 +39,20 @@ export const fcmUserAddedToAppointment = functions.firestore.document('appointme
             click_action: 'https://appointments-pwa.firebaseapp.com'
         }
     }
-    console.log(notification)
+
 
     attendeeUids.forEach(userId => {
-        admin.database().ref(`fcmTokens/${userId}`).once('value')
-            .then(token =>
-                token.val()
-            )
-            .then(userFcmToken => {
-                return admin.messaging().sendToDevice(userFcmToken, notification)
+        admin.firestore().doc(`fcmTokens/${userId}`).get()
+            .then(token => {
+                const fcmToken: any = token.data();
+                console.log(fcmToken);
+
+                const key = Object.keys(fcmToken)[0];
+                console.log(fcmToken[key])
+                return admin.messaging().sendToDevice(fcmToken[key], notification)
             })
             .then(res => {
-                console.log("Sent Successfully", res);
+                console.log('Sent Successfully', res);
             })
             .catch(err => {
                 console.log(err);
