@@ -15,14 +15,14 @@ Website: https://appointments-pwa.firebaseapp.com
 
 ## Firebase
 
-- :fire: [Authentication](https://firebase.google.com/docs/auth/)
+### :fire: [Authentication](https://firebase.google.com/docs/auth/)
 
   - Email/Password
   - Google
     - Import Google Contacts
     - Add and remove Calendar Events
 
-- <div>🔥<a href="https://firebase.google.com/docs/firestore/">Firestore &#946;</a></div>
+### <div>🔥<a href="https://firebase.google.com/docs/firestore/">Firestore &#946;</a></div>
 
   - Data structure
 
@@ -41,13 +41,22 @@ Website: https://appointments-pwa.firebaseapp.com
   }
 ```
 
-- :fire: [Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/)
-  - :fire: [Functions](https://firebase.google.com/docs/functions/) (firestore event -> push notification)
-- :fire: [Hosting](https://firebase.google.com/docs/hosting/)
+### :fire: [Functions](https://firebase.google.com/docs/functions/)
+One function to send Push Notifications. ([src](/functions/src/index.ts))
+> firebaseCloudMsgPushNotification()
+  - Listens for created appointments in Firestore (`onCreate` [trigger](https://firebase.google.com/docs/functions/firestore-events)) 
+  - Reads all attendees of the appointment that are actual users (not google contacts)
+  - Sends a Push Notification to the users fcmToken and the client side will do the rest
+
+### :fire: [Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/)
+
+<img src="docs/fcmSteps.png" alt="fcmSteps" height="400" />
+
+### :fire: [Hosting](https://firebase.google.com/docs/hosting/)
 
 ## Google APIs
 
-The Google login with the official js [client](https://developers.google.com/api-client-library/javascript/start/start-js) includes scopes for following Google APIs
+The Google login with their api [client](https://developers.google.com/api-client-library/javascript/start/start-js) includes scopes for following Google APIs
 
 - People API (`/auth/calendar`)
 - Google Calendar API (`/contacts/readonly`)
