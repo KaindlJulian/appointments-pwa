@@ -19,8 +19,6 @@ Website: https://appointments-pwa.firebaseapp.com
 
   - Email/Password
   - Google
-    - Import Google Contacts
-    - Add and remove Calendar Events
 
 ### <div>🔥<a href="https://firebase.google.com/docs/firestore/">Firestore &#946;</a></div>
 
@@ -53,6 +51,8 @@ One function to send Push Notifications. ([src](/functions/src/index.ts))
 <img src="docs/fcmSteps.png" alt="fcmSteps" height="400" />
 
 ### :fire: [Hosting](https://firebase.google.com/docs/hosting/)
+
+Deploying the production build from travis ((.travis.yml)[.travis.yml])
 
 ## Google APIs
 
