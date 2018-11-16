@@ -32,7 +32,7 @@ export const firebasCloudMsgPushNotification = functions.firestore.document('app
     const notification = {
         notification: {
             title: `You were added to: "${appointment.title}"`,
-            body: `taking place on ${appointment.date}, created by ${appointment.author.name}`,
+            body: `taking place on ${appointment.date.toDateString}, created by ${appointment.author.name}`,
             icon: appointment.author.photoURL ?
                 appointment.author.photoURL :
                 'https://firebasestorage.googleapis.com/v0/b/appointments-pwa.appspot.com/o/notification-icon.png?alt=media&token=4aa7f55c-9ce5-4e56-b712-ed45eb70e0a9',
