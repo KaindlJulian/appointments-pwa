@@ -19,7 +19,7 @@
     "@angular/fire": "^5.1.0",
     "@angular/forms": "^7.0.3",
     "@angular/http": "^7.0.3",
-    "@angular/material": "^7.0.3",
+    "@angular/material": "^7.1.0",
     "@angular/platform-browser": "^7.0.3",
     "@angular/platform-browser-dynamic": "^7.0.3",
     "@angular/pwa": "^0.10.5",
