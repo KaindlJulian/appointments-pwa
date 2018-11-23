@@ -31,11 +31,11 @@ export const firebasCloudMsgPushNotification = functions.firestore.document('app
      */
     const notification = {
         notification: {
-            title: `You were added to: "${appointment.title}"`,
+            title: `You were added to ${appointment.title}`,
             body: `taking place on ${appointment.date.toDateString}, created by ${appointment.author.name}`,
             icon: appointment.author.photoURL ?
                 appointment.author.photoURL :
-                'https://firebasestorage.googleapis.com/v0/b/appointments-pwa.appspot.com/o/notification-icon.png?alt=media&token=4aa7f55c-9ce5-4e56-b712-ed45eb70e0a9',
+                'https://firebasestorage.googleapis.com/v0/b/appointments-pwa.appspot.com/o/notification-icon.png?alt=media&token=7f77e57e-615e-41ff-a396-50ac009344c9',
             click_action: 'https://appointments-pwa.firebaseapp.com'
         }
     }
@@ -45,17 +45,14 @@ export const firebasCloudMsgPushNotification = functions.firestore.document('app
         admin.firestore().doc(`fcmTokens/${userId}`).get()
             .then(token => {
                 const fcmToken: any = token.data();
-                console.log(fcmToken);
-
                 const key = Object.keys(fcmToken)[0];
-                console.log(fcmToken[key])
                 return admin.messaging().sendToDevice(fcmToken[key], notification)
             })
             .then(res => {
                 console.log('Sent Successfully', res);
             })
             .catch(err => {
-                console.log(err);
+                console.log('Error', err);
             })
     });
 })

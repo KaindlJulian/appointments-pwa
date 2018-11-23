@@ -52,7 +52,7 @@ One function to send Push Notifications. ([src](/functions/src/index.ts))
 
 ### :fire: [Hosting](https://firebase.google.com/docs/hosting/)
 
-Deploying the production build from travis ((.travis.yml)[.travis.yml])
+Deploying the production build from travis ([.travis.yml](.travis.yml)
 
 ## Google APIs
 

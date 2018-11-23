@@ -26,34 +26,34 @@ export class AppointmentComponent {
 
   constructor(public attendeeDialog: MatDialog, private appointmentService: AppointmentService, private authService: AuthService) {
     this.user$ = this.authService.user;
-}
+  }
 
-addClicked(event: Appointment) {
-  const calendarEvt: CalendarEvent = new CalendarEvent();
-  calendarEvt.title = event.title;
-  calendarEvt.description = event.body;
-  calendarEvt.startDate = event.date;
-  calendarEvt.endDate = event.date;
-  calendarEvt.attendees = event.attendees;
-  this.addCalendarEvent.emit(calendarEvt);
-}
+  addClicked(event: Appointment) {
+    const calendarEvt: CalendarEvent = new CalendarEvent();
+    calendarEvt.title = event.title;
+    calendarEvt.description = event.body;
+    calendarEvt.startDate = event.date;
+    calendarEvt.endDate = event.date;
+    calendarEvt.attendees = event.attendees;
+    this.addCalendarEvent.emit(calendarEvt);
+  }
 
-delete (appointment: Appointment) {
-  this.appointmentService.deleteAppointment(appointment._id);
-  this.deleted.emit();
-}
+  delete(appointment: Appointment) {
+    this.appointmentService.deleteAppointment(appointment._id);
+    this.deleted.emit();
+  }
 
-openAddAttendeeDialog() {
-  const dialogRef = this.attendeeDialog.open(AddAttendeeComponent, {
-    data: this.model
-  });
-  dialogRef.afterClosed().subscribe(result => {
-    if (result) {
-      (result as User[]).forEach(u => {
-        this.model.attendees.push(u);
-      });
-      this.appointmentService.updateAppointment(this.model._id, this.model);
-    }
-  });
-}
+  openAddAttendeeDialog() {
+    const dialogRef = this.attendeeDialog.open(AddAttendeeComponent, {
+      data: this.model
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        (result as User[]).forEach(u => {
+          this.model.attendees.push(u);
+        });
+        this.appointmentService.updateAppointment(this.model._id, this.model);
+      }
+    });
+  }
 }

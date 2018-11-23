@@ -1,3 +1,11 @@
 .no-shadow {
     box-shadow: unset;
 }
+
+.notification-icon {
+    background-size: cover;
+}
+
+mat-card-content {   
+    margin-top: 16px;
+}

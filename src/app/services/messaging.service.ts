@@ -29,7 +29,6 @@ export class MessagingService {
   requestPermission() {
     this.cloudMessaging.requestToken.subscribe(
       (token) => {
-        console.log(token);
         this.updateToken(token);
       },
       (err) => {

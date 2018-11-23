@@ -56,7 +56,7 @@ export class SidenavComponent implements OnInit {
       if (message) {
         this.snackBar.openFromComponent(NotificationComponent, {
           data: message.notification,
-          duration: 1000,
+          duration: 7000,
           panelClass: ['dark-snackbar'],
         });
       }
@@ -65,19 +65,22 @@ export class SidenavComponent implements OnInit {
 
   navigateAppointments() {
     this.router.navigate(['/home', 'appointments']);
-    this.sidenav.close();
+    if (this.mobileQuery.matches) {
+      this.sidenav.close();
+    }
   }
 
   navigateContacts() {
     this.router.navigate(['/home', 'contacts']);
-    this.sidenav.close();
+    if (this.mobileQuery.matches) {
+      this.sidenav.close();
+    }
   }
 
   navigateCalendar() {
     this.router.navigate(['/home', 'calendar']);
-    this.sidenav.close();
+    if (this.mobileQuery.matches) {
+      this.sidenav.close();
+    }
   }
-
 }
-
-
