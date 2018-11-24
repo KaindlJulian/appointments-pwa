@@ -38,15 +38,14 @@
               <a href="https://firebase.google.com/support/privacy/">Privacy Policy</a>
               and <a href="https://firebase.google.com/terms/">Terms</a> of Firebase.
             </p>
-
           </mat-checkbox>
         </div>
       </section>
-    </form>
 
-    <div class="login-button-group">
-      <button (click)="signUp()" mat-flat-button color="primary" class="w-100"> SIGN UP </button>
-    </div>
+      <div class="login-button-group">
+        <button type="submit" (click)="signUp()" mat-flat-button color="primary" class="w-100"> SIGN UP </button>
+      </div>
+    </form>
 
     <p class="have-account">Already have an account ?
       <a (click)="navigateLogin.emit()">Sign In</a>

@@ -25,37 +25,50 @@
   margin: -100px auto $l !important;
 }
 
+.spacer {
+  flex: 1 1 auto;
+}
+
 .form-body {
-  min-width: 300px;
-  max-width: 370px;
-  min-height: 60%;
+  position: relative;
   @include center("area");
   h1 {
     text-align: center;
   }
-  background: #424242f4;
+  background: #424242;
+}
+
+.create-account {
+  text-align: center;
+  font-size: 12px;
 }
 
 @media (max-width: $small) {
-  .form-body {
-    margin-top: 150px;
-    position: relative;
-  }
   .spacer {
-    display: none;
+    all: unset;
   }
   .form-logo {
     display: none;
   }
+  .form-body {
+    position: relative !important;
+    transform: none !important;
+    top: 0 !important;
+    left: 0 !important;
+    flex: 0 1 auto;
+    height: 100%;
+    background-color: #424242f4;
+  }
   .page-container {
-    position: relative;
-    height: unset;
     overflow: hidden;
-    height: 100vh;
+    height: 100%;
+
     mat-card {
-      margin: 0 auto;
-      min-height: calc(100vh - 48px);
+      margin: unset;
       border-radius: 0;
+      @media (max-height: 760px) {
+        width: 100%;
+      }
     }
   }
 }
@@ -90,47 +103,31 @@ form {
   }
 }
 
-.create-account {
-  text-align: center;
-  font-size: 12px;
-}
-
-@media (max-width: $small) {
-  .create-account {
-    position: fixed;
-    width: 100vw;
-    bottom: 64px;
-    margin-left: -24px;
-    text-align: center;
-  }
-}
-
-.spacer {
-  display: none;
-}
-
 @media (max-height: 760px) {
   .page-container {
     display: flex;
-    flex-direction: row;
   }
   .form-body {
-    position: relative;
+    position: relative !important;
+    transform: none !important;
+    top: 0 !important;
+    left: 0 !important;
     flex: 0 1 auto;
     height: 100%;
-    top: 0;
-    left: 0;
-    transform: none;
-    -webkit-transform: none;
-  }
-  .spacer {
-    display: block;
-    flex: 1 1 auto;
+    border-radius: 0;
   }
   .form-logo {
     background: none;
     border: none;
     box-shadow: none;
     margin: $m auto 0 !important;
+  }
+}
+
+
+@media (max-height: 700px) {
+  .form-logo {
+    all: unset;
+    display: none;
   }
 }

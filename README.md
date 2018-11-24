@@ -41,7 +41,6 @@ Website: https://appointments-pwa.firebaseapp.com
 
 ### :fire: [Functions](https://firebase.google.com/docs/functions/)
 One function to send Push Notifications. ([src](/functions/src/index.ts))
-> firebaseCloudMsgPushNotification()
   - Listens for created appointments in Firestore (`onCreate` [trigger](https://firebase.google.com/docs/functions/firestore-events)) 
   - Reads all attendees of the appointment that are actual users (not google contacts)
   - Sends a Push Notification to the users fcmToken and the client side will do the rest

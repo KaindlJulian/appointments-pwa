@@ -8,7 +8,7 @@
     <div class="background">
       <h1>Sign In to your Account</h1>
       <!--Form-->
-      <form>
+      <form id="login-form">
         <mat-form-field class="example-full-width">
           <input name="email" matInput placeholder="Email" [formControl]="emailFormControl">
           <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
@@ -31,6 +31,8 @@
             <strong>required</strong>
           </mat-error>
         </mat-form-field>
+
+
       </form>
       <!--/Form-->
       <!--Actions-->
@@ -38,10 +40,11 @@
         <a (click)="sendResetMail()">Forgot your Password?</a>
       </p>
       <div class="login-button-group">
-        <button (click)="signIn()" mat-flat-button color="primary" class="w-100"> SIGN IN </button>
+        <button type="submit" form="login-form" (click)="signIn()" mat-flat-button color="primary" class="w-100"> SIGN IN </button>
 
         <div class="divider">
-          <mat-divider></mat-divider>OR
+          <mat-divider></mat-divider>
+          OR
           <mat-divider></mat-divider>
         </div>
 
