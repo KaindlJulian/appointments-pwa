@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Appointment } from '../models/appointment';
 import { AngularFirestoreCollection, AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore';
 
+import * as faker from 'faker';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -35,5 +37,38 @@ export class AppointmentService {
 
   toObject(model: any) {
     return JSON.parse(JSON.stringify(model));
+  }
+
+  generateFakeData(datasets: number) {
+    const data = Array(datasets)
+      .fill(1)
+      .map(() => {
+
+        const attendees = Array(Math.floor((Math.random() * 4) + 2))
+          .fill(1)
+          .map(() => {
+            return {
+              name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+              email: faker.internet.email(),
+              photoURL: faker.image.avatar()
+            };
+          });
+
+        return {
+          title: faker.lorem.sentence(),
+          body: faker.lorem.sentences(4),
+          date: new Date().toISOString(),
+          author: {
+            name: `${faker.name.firstName()} ${faker.name.lastName()}`,
+            email: faker.internet.email(),
+            photoURL: faker.image.avatar()
+          },
+          attendees: attendees
+        };
+      });
+    console.log(data);
+    data.forEach(d => {
+      this.appointments.add(d);
+    });
   }
 }

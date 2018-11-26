@@ -41,7 +41,6 @@ const routes: Routes = [
       },
     ]
   },
-  {path: 'test', component: NotificationComponent},
   {
     path: '',
     component: LoginRegisterWrapperComponent

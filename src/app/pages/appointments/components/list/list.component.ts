@@ -2,7 +2,7 @@ import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { map, tap, scan, mergeMap, throttleTime, last } from 'rxjs/operators';
+import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Appointment } from 'src/app/models/appointment';
 import { MatDialog, MatSnackBar, MatSpinner } from '@angular/material';
@@ -20,12 +20,14 @@ const batchSize = 10;
 })
 export class ListComponent {
 
+  // spinner state
   isLoading = true;
 
   @ViewChild(CdkVirtualScrollViewport)
   viewport: CdkVirtualScrollViewport;
 
   endReached = false;
+  lastSeenDate = null;
 
   offset = new BehaviorSubject(null);
   batch = new Observable<Appointment[]>();
@@ -41,12 +43,12 @@ export class ListComponent {
     public appointmentDialog: MatDialog,
     public snackBar: MatSnackBar,
   ) {
-
+    // listening on offset changes to update the batchmap
     const batchMap = this.offset.pipe(
       throttleTime(500),
-      mergeMap((n: Date) => this.getBatch(n)),
+      mergeMap((n: Date) => this.getBatch(n)),  // use mergeMap to keep older subscriptions
       scan((acc, batch) => {
-        return { ...acc, ...batch };
+        return { ...acc, ...batch };  // adding accumulated item to the others
       }, {}),
       tap(_ => {
         if (this.batch !== null) {
@@ -56,8 +58,14 @@ export class ListComponent {
     );
 
     this.batch = batchMap.pipe(
-      map(v => Object.values(v))
+      // when adding, removing data it gets until here but is not added to the view (why i made the stackblitz)
+      map(_ => {console.log(_); return _; }),
+      map(v => Object.values(v)),
     );
+
+    this.batch.subscribe(_ => {
+      console.log(_);
+    });
 
     this.mobileQuery = media.matchMedia('(max-width: 720px)');
     this._mobileQueryListener = () => {
@@ -66,6 +74,7 @@ export class ListComponent {
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
+  // called by the (scrolledIndexChange) event
   getNextBatch(e, offset) {
     if (this.endReached) {
       return;
@@ -74,7 +83,8 @@ export class ListComponent {
     const end = this.viewport.getRenderedRange().end;
     const total = this.viewport.getDataLength();
 
-    if (end >= total - 3) {
+    // if end is reached emit new offset, which triggers the batchMap in constructor
+    if (end === total) {
       this.offset.next(offset as Date);
     }
   }
@@ -84,36 +94,33 @@ export class ListComponent {
       .collection('appointments', ref =>
         ref
           .orderBy('date')
-          .startAfter(lastSeenDate ? lastSeenDate : new Date().toISOString())
+          .startAfter(lastSeenDate)
           .limit(batchSize)
       )
       .snapshotChanges()
       .pipe(
         tap(arr => (arr.length ? null : (this.endReached = true))),
         map(arr => {
-          return arr.reduce((acc, cur) => {
+          return arr.reduce((acc, cur) => { // accumulates an array of appointments and provides it to the next callback
             const id = cur.payload.doc.id;
-            const data = cur.payload.doc.data();
-            const a = new Appointment();
-            a._id = id;
-            a.attendees = (data as any).attendees;
-            a.author = (data as any).author;
-            a.body = (data as any).body;
-            a.date = ((data as any).date);
-            a.title = (data as any).title;
-            return { ...acc, [id]: a };
+            const data: any = cur.payload.doc.data();
+            const appointment = new Appointment();
+            appointment._id = id;
+            appointment.attendees = data.attendees;
+            appointment.author =  data.author;
+            appointment.body =  data.body;
+            appointment.date =  data.date;
+            appointment.title = data.title;
+            return { ...acc, [id]: appointment };
           }, {});
         })
       );
   }
 
-  trackByIndex(i) {
-    return i;
-  }
-
+  // my current workaround is to just load it all again :/
   reload() {
     this.isLoading = true;
-    this.offset.next(new Date().toISOString());
+    this.offset.next(new Date(-1).toISOString());
     const batchMap = this.offset.pipe(
       throttleTime(500),
       mergeMap(n => this.getBatch(n)),
@@ -129,7 +136,7 @@ export class ListComponent {
   }
 
   removeFromList(appointment: Appointment) {
-    this.reload();
+    this.reload(); // lul
   }
 
   addToCalendar(event: CalendarEvent) {
@@ -139,7 +146,7 @@ export class ListComponent {
 
   openSnackBar(message: string) {
     this.snackBar.open(message, '', {
-      duration: 1000
+      duration: 4000
     });
   }
 
@@ -148,7 +155,7 @@ export class ListComponent {
       data: {
       }
     }).afterClosed().subscribe(() => {
-      setTimeout(() => this.reload(), 1000);
+      setTimeout(() => this.reload(), 1000);  // lul
     });
   }
 }

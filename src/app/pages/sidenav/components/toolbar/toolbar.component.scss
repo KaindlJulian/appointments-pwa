@@ -1,3 +1,15 @@
 .profile-img {
     border-radius: 50%;
 }
+
+.git-link {
+    img {
+        margin: 0 4px 3px 0;
+        vertical-align: middle;
+    }
+    text-decoration: none !important;
+}
+
+a :hover {
+    text-decoration: none !important; 
+}

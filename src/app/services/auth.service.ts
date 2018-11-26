@@ -69,9 +69,6 @@ export class AuthService {
       .then((res: any) => {
         localStorage.setItem('user', JSON.stringify(res.user)); // maybe save session w/ service worker
         this.user = of(res.user);
-      })
-      .catch((error) => {
-        console.log(error);
       });
   }
 

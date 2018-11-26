@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="/src/assets/logo.svg" height="200">
+    <img src="/src/assets/logo.svg" height="100">
 </p>
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Empty.png" height="16px">
@@ -43,7 +43,7 @@ Website: https://appointments-pwa.firebaseapp.com
 One function to send Push Notifications. ([src](/functions/src/index.ts))
   - Listens for created appointments in Firestore (`onCreate` [trigger](https://firebase.google.com/docs/functions/firestore-events)) 
   - Reads all attendees of the appointment that are actual users (not google contacts)
-  - Sends a Push Notification to the users fcmToken and the client side will do the rest
+  - Sends a Notification to the users via their fcmToken and the client side angular service will do the rest
 
 ### :fire: [Cloud Messaging](https://firebase.google.com/docs/cloud-messaging/)
 
@@ -51,18 +51,15 @@ One function to send Push Notifications. ([src](/functions/src/index.ts))
 
 ### :fire: [Hosting](https://firebase.google.com/docs/hosting/)
 
-Deploying the production build from travis ([.travis.yml](.travis.yml)
+Deploying the build with `firebase deploy` or from travis
 
 ## Google APIs
 
 The Google login with their api [client](https://developers.google.com/api-client-library/javascript/start/start-js) includes scopes for following Google APIs
 
-- People API (`/auth/calendar`)
-- Google Calendar API (`/contacts/readonly`)
+- People API (`/contacts/readonly`)
+- Google Calendar API (`/auth/calendar`)
 
-## Virtual scrolling
-
-To create a high performance realtime list which only renders elements that fit on the screen (similar to the Android RecyclerView that also only creates as much ViewHolders as needed). More [here](https://material.angular.io/cdk/scrolling/overview#virtual-scrolling).
 
 ## Getting started
 

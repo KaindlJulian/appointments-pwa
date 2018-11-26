@@ -101,4 +101,9 @@ export class AddAppointmentComponent {
     const filterValue = userName.toLowerCase();
     return this.users.filter(u => u.name.toLowerCase().indexOf(filterValue) === 0);
   }
+
+  fake() {
+    this.appointmentService.generateFakeData(1);
+    this.dialogRef.close();
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
@@ -39,7 +39,14 @@ export class LoginComponent {
 
   async signIn() {
     if (this.emailFormControl.valid && this.passwordFormControl.valid) {
-      await this.authService.signIn(this.emailFormControl.value, this.passwordFormControl.value);
+      await this.authService.signIn(this.emailFormControl.value, this.passwordFormControl.value)
+        .catch((error) => {
+          this.authService.sendResetPasswordEmail(this.emailFormControl.value).then(() => {
+            this.snackBar.open(error.message, null, {
+              duration: 6000
+            });
+          });
+        });
       this.router.navigate(['home']);
     }
   }
@@ -52,7 +59,7 @@ export class LoginComponent {
   sendResetMail() {
     this.authService.sendResetPasswordEmail(this.emailFormControl.value).then(() => {
       this.snackBar.open('Reset Email sent!', null, {
-        duration: 1000
+        duration: 6000
       });
     });
   }
