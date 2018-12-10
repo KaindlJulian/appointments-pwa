@@ -1,14 +1,18 @@
 <mat-spinner *ngIf="isLoading" class="loading-spinner"></mat-spinner>
 <ng-container *ngIf="batch | async as appointments">
 
-<cdk-virtual-scroll-viewport [itemSize]="mobileQuery.matches ? 300 : 250" (scrolledIndexChange)="getNextBatch($event, (appointments[appointments.length - 1].date))">
+  <cdk-virtual-scroll-viewport [itemSize]="mobileQuery.matches ? 300 : 250" (scrolledIndexChange)="getNextBatch($event, (appointments[appointments.length - 1].date))">
 
-  <div class="slide-left" *cdkVirtualFor="let appointment of appointments">
-    <app-appointment [model]="appointment" (addCalendarEvent)="addToCalendar($event)" (deleted)="removeFromList(appointment)"></app-appointment>
-  </div>
+    <div class="slide-left" *cdkVirtualFor="let appointment of appointments; trackBy: trackByIndex">
+      <app-appointment [model]="appointment" (addCalendarEvent)="addToCalendar($event)"></app-appointment>
+    </div>
 
-</cdk-virtual-scroll-viewport>
+    <div *ngIf="endReached" (click)="scrollTop()" class="end-indicator"></div>
 
-<button mat-fab class="fab" (click)="openAddAppointmentDialog()">
-  <mat-icon>add</mat-icon>
-</button>
+  </cdk-virtual-scroll-viewport>
+
+
+
+  <button mat-fab class="fab" (click)="openAddAppointmentDialog()">
+    <mat-icon>add</mat-icon>
+  </button>

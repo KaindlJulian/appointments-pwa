@@ -8,13 +8,17 @@ import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-appointment',
   templateUrl: './appointment.component.html',
-  styleUrls: ['./appointment.component.scss']
+  styleUrls: ['./appointment.component.scss'],
 })
 export class AppointmentComponent {
+
+  selfDeleted = false;
 
   user$: Observable<firebase.User>;
 
@@ -24,7 +28,12 @@ export class AppointmentComponent {
 
   @Output() deleted: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(public attendeeDialog: MatDialog, private appointmentService: AppointmentService, private authService: AuthService) {
+  constructor(
+    public attendeeDialog: MatDialog,
+    private appointmentService: AppointmentService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.user$ = this.authService.user;
   }
 
@@ -39,6 +48,7 @@ export class AppointmentComponent {
   }
 
   delete(appointment: Appointment) {
+    this.selfDeleted = true;
     this.appointmentService.deleteAppointment(appointment._id);
     this.deleted.emit();
   }
@@ -55,5 +65,9 @@ export class AppointmentComponent {
         this.appointmentService.updateAppointment(this.model._id, this.model);
       }
     });
+  }
+
+  navigateAppointment() {
+    this.router.navigate(['home', 'appointments', this.model._id]);
   }
 }

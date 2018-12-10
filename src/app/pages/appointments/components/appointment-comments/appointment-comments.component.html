@@ -1,0 +1,36 @@
+<ng-container *ngIf="appointment | async as model">
+  <mat-card class="container">
+    <div class="header">
+      <img [src]="model.author.photoURL" class="avatar" alt="avatar">
+      <div class="title">
+        <h3>{{ model.title }}</h3>
+        <mat-divider style="position: relative"></mat-divider>
+        <div class="sub-title">
+          <div class="author">
+            <span>{{ model.author.name }}</span>
+          </div>
+          -
+          <div class="date">
+            <span>{{ model.date | date: 'dd.MMMM.yyyy' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="body">
+      {{ model.body }}
+    </div>
+  </mat-card>
+
+  <mat-card class="container">
+      <form class="example-form">     
+          <mat-form-field class="w-100">
+            <textarea matInput placeholder="Leave a comment"></textarea>
+          </mat-form-field>
+        </form>
+  </mat-card>
+
+  <mat-card class="container" *ngFor="">
+
+  </mat-card>
+</ng-container>

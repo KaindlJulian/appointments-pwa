@@ -8,8 +8,6 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { AppointmentService } from 'src/app/services/appointment.service';
 import { Observable, of } from 'rxjs';
 import { startWith, map, filter } from 'rxjs/operators';
-import { UserService } from 'src/app/services/user.service';
-import { MediaMatcher } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-add-appointment',

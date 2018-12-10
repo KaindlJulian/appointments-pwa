@@ -1,0 +1,32 @@
+@import 'src/app/sass/breakpoints.scss';
+
+.container {
+    margin: $m;
+}
+
+.header {
+    display: flex;
+    width: 100%;
+    .avatar {
+        border-radius: 50%;
+        height: 64px;
+        margin: auto $m auto 0;
+    }
+    .title {
+        flex: 1 0 auto;
+        .sub-title {
+            display: flex;
+            margin-top: 2px;
+            .author {
+                margin-right: $m;
+            }
+            .date {
+                margin-left: $m;
+            }
+        }
+    }
+}
+
+.body {
+    margin-top: $l;
+}

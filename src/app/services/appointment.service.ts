@@ -16,6 +16,10 @@ export class AppointmentService {
     this.appointments = this.db.collection<any>('appointments');
   }
 
+  getAppointment(id: string) {
+    return this.appointments.doc(id).get();
+  }
+
   addAppointment(appointment: Appointment) {
     console.log(this.toObject(appointment));
     this.appointments.add(this.toObject(appointment));
@@ -57,7 +61,7 @@ export class AppointmentService {
         return {
           title: faker.lorem.sentence(),
           body: faker.lorem.sentences(4),
-          date: new Date().toISOString(),
+          date: new Date().toISOString(), // faker.date.future(1).toISOString()
           author: {
             name: `${faker.name.firstName()} ${faker.name.lastName()}`,
             email: faker.internet.email(),

@@ -3,10 +3,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './guards/auth.guard';
 import { LoginRegisterWrapperComponent } from './components';
 import { SidenavComponent } from './pages/sidenav/sidenav.component';
-import { ListComponent } from './pages/appointments/components';
+import { ListComponent, AppointmentCommentsComponent } from './pages/appointments/components';
 import { ContactListComponent } from './pages/contacts/components';
 import { CalendarComponent } from './pages/calendar/components';
-import { NotificationComponent } from './pages/sidenav/components';
 
 const routes: Routes = [
   {
@@ -29,7 +28,11 @@ const routes: Routes = [
       },
       {
         path: 'appointments',
-        component: ListComponent
+        component: ListComponent,
+      },
+      {
+        path: 'appointments/:id',
+        component: AppointmentCommentsComponent
       },
       {
         path: 'contacts',

@@ -25,7 +25,8 @@ import {
   MatDatepickerModule,
   MatNativeDateModule,
   MatChipsModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatRippleModule
 } from '@angular/material';
 
 @NgModule({
@@ -33,6 +34,7 @@ import {
     CommonModule
   ],
   exports: [
+    MatRippleModule,
     MatButtonModule,
     MatToolbarModule,
     MatListModule,

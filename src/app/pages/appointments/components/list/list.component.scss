@@ -58,3 +58,39 @@ cdk-virtual-scroll-viewport {
     opacity: 1;
   }
 }
+
+.end-indicator{
+  height: 100px;
+  width: 100px;
+  background-color: #67edae;
+  border-radius: 50%;
+  margin: 0 auto $m;
+}
+
+.end-indicator::before{
+  content: '';
+  display: block;
+  width: 50px;
+  height: 5px;
+  background-color: #303030;
+  transform: rotate(-45deg);
+  position: relative;
+  top: 45px;
+  left: 7px;
+}
+
+.end-indicator::after{
+  content: '';
+  display: block;
+  width: 50px;
+  height: 5px;
+  background-color: #303030;
+  transform: rotate(45deg);
+  position: relative;
+  top: 40px;
+  left: 40px;
+}
+
+.end-indicator:hover {
+  background-color: #86eebe;
+}

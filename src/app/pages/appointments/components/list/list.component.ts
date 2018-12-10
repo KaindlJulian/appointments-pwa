@@ -1,11 +1,11 @@
 import { Component, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { map, tap, scan, mergeMap, throttleTime } from 'rxjs/operators';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Appointment } from 'src/app/models/appointment';
-import { MatDialog, MatSnackBar, MatSpinner } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { AddAppointmentComponent } from '../add-appointment/add-appointment.component';
 import { CalendarEvent } from 'src/app/models/calendar-event';
 import { AuthService } from 'src/app/services/auth.service';
@@ -30,10 +30,12 @@ export class ListComponent {
   lastSeenDate = null;
 
   offset = new BehaviorSubject(null);
-  batch = new Observable<Appointment[]>();
+  batch = new Observable<any[]>();
 
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
+
+  test = [];
 
   constructor(
     private authService: AuthService,
@@ -58,14 +60,15 @@ export class ListComponent {
     );
 
     this.batch = batchMap.pipe(
-      // when adding, removing data it gets until here but is not added to the view (why i made the stackblitz)
-      map(_ => {console.log(_); return _; }),
-      map(v => Object.values(v)),
+      map(values => {
+        const arr = [];
+        arr.push(...Object.values(values));
+        arr.sort((a: any, b: any) => {
+          return new Date(a.date).getTime() - new Date(b.date).getTime();
+        });
+        return arr;
+      }),
     );
-
-    this.batch.subscribe(_ => {
-      console.log(_);
-    });
 
     this.mobileQuery = media.matchMedia('(max-width: 720px)');
     this._mobileQueryListener = () => {
@@ -94,7 +97,7 @@ export class ListComponent {
       .collection('appointments', ref =>
         ref
           .orderBy('date')
-          .startAfter(lastSeenDate)
+          .startAfter(lastSeenDate ? lastSeenDate : new Date().toISOString())
           .limit(batchSize)
       )
       .snapshotChanges()
@@ -107,9 +110,9 @@ export class ListComponent {
             const appointment = new Appointment();
             appointment._id = id;
             appointment.attendees = data.attendees;
-            appointment.author =  data.author;
-            appointment.body =  data.body;
-            appointment.date =  data.date;
+            appointment.author = data.author;
+            appointment.body = data.body;
+            appointment.date = data.date;
             appointment.title = data.title;
             return { ...acc, [id]: appointment };
           }, {});
@@ -117,31 +120,17 @@ export class ListComponent {
       );
   }
 
-  // my current workaround is to just load it all again :/
-  reload() {
-    this.isLoading = true;
-    this.offset.next(new Date(-1).toISOString());
-    const batchMap = this.offset.pipe(
-      throttleTime(500),
-      mergeMap(n => this.getBatch(n)),
-      scan((acc, batch) => {
-        return { ...acc, ...batch };
-      }, {})
-    );
-
-    this.batch = batchMap.pipe(
-      map(v => Object.values(v))
-    );
-    this.isLoading = false;
-  }
-
-  removeFromList(appointment: Appointment) {
-    this.reload(); // lul
+  trackByIndex(i) {
+    return i;
   }
 
   addToCalendar(event: CalendarEvent) {
     this.authService.addCalendarEvent(event);
     this.openSnackBar('Event added to your Google Calendar');
+  }
+
+  scrollTop() {
+    this.viewport.scrollToIndex(0);
   }
 
   openSnackBar(message: string) {
@@ -154,8 +143,6 @@ export class ListComponent {
     this.appointmentDialog.open(AddAppointmentComponent, {
       data: {
       }
-    }).afterClosed().subscribe(() => {
-      setTimeout(() => this.reload(), 1000);  // lul
     });
   }
 }

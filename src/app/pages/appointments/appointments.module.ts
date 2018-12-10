@@ -10,8 +10,10 @@ import {
   ListComponent,
   AppointmentComponent,
   AddAppointmentComponent,
-  AddAttendeeComponent
+  AddAttendeeComponent,
+  AppointmentCommentsComponent,
 } from './components';
+
 
 @NgModule({
   imports: [
@@ -26,7 +28,8 @@ import {
     ListComponent,
     AppointmentComponent,
     AddAppointmentComponent,
-    AddAttendeeComponent
+    AddAttendeeComponent,
+    AppointmentCommentsComponent
   ],
   entryComponents: [
     AddAppointmentComponent,
