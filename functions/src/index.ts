@@ -35,11 +35,13 @@ export const firebasCloudMsgPushNotification = functions.firestore.document('app
             icon: appointment.author.photoURL ?
                 appointment.author.photoURL :
                 'https://firebasestorage.googleapis.com/v0/b/appointments-pwa.appspot.com/o/notification-icon.png?alt=media&token=7f77e57e-615e-41ff-a396-50ac009344c9',
-            click_action: 'https://appointments-pwa.firebaseapp.com'
+            click_action: `https://appointments-pwa.firebaseapp.com/home/appointments/${appointment._id}`
         }
     }
 
-
+    /**
+     * sending a notification to each attendee
+     */
     attendeeUids.forEach(userId => {
         admin.firestore().doc(`fcmTokens/${userId}`).get()
             .then(token => {

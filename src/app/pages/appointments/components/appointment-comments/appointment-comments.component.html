@@ -1,7 +1,7 @@
 <ng-container *ngIf="appointment | async as model">
-  <mat-card class="container">
+  <mat-card class="container highlighted">
     <div class="header">
-      <img [src]="model.author.photoURL" class="avatar" alt="avatar">
+      <img mat-card-avatar class="avatar" [src]="model.author.photoURL ? model.author.photoURL : '/assets/round-account-button-with-user-inside.svg'">
       <div class="title">
         <h3>{{ model.title }}</h3>
         <mat-divider style="position: relative"></mat-divider>
@@ -22,15 +22,32 @@
     </div>
   </mat-card>
 
-  <mat-card class="container">
-      <form class="example-form">     
-          <mat-form-field class="w-100">
-            <textarea matInput placeholder="Leave a comment"></textarea>
-          </mat-form-field>
-        </form>
+  <mat-card class="container highlighted">
+    <form class="example-form">
+      <div class="flexbox">
+        <div class="avatar"><img [src]="user.photoURL" alt="profilePicture"></div>
+        <mat-form-field class="form-field input">
+          <textarea id="textarea" matInput placeholder="Leave a comment" [formControl]="commentFormControl"></textarea>
+        </mat-form-field>
+      </div>
+    </form>
+    <mat-card-actions id="buttons">
+      <div class="flex-spacer"></div>
+      <button mat-button [disabled]="inputEmpty" (click)="cancel()">CANCEL</button>
+      <button mat-flat-button color="primary" [disabled]="inputEmpty" (click)="comment()">COMMENT</button>
+    </mat-card-actions>
   </mat-card>
 
-  <mat-card class="container" *ngFor="">
-
+  <mat-card class="container" *ngFor="let comment of model.comments">
+    <mat-card-header>
+      <div mat-card-avatar class="header-image" [style.background-image]="'url('+ (user.photoURL ? user.photoURL : '/assets/account.png' )  + ')'"></div>
+      <mat-card-title>{{comment.author.name}}</mat-card-title>
+      <mat-card-subtitle>{{comment.date | date:'dd. MMMM yyyy, HH:mm'}}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{comment.body}}
+      </p>
+    </mat-card-content>
   </mat-card>
 </ng-container>

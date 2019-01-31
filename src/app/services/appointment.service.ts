@@ -31,7 +31,7 @@ export class AppointmentService {
 
   updateAppointment(id, update: Appointment) {
     this.appointmentDoc = this.db.doc<any>(`appointments/${id}`);
-    this.appointmentDoc.update(this.toObject(update));
+    return this.appointmentDoc.update(this.toObject(update));
   }
 
   deleteAppointment(id) {

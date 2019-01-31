@@ -1,4 +1,5 @@
 import { User } from './user';
+import { Comment } from './comment';
 
 export class Appointment {
     _id?: String;
@@ -7,4 +8,5 @@ export class Appointment {
     body: String;
     date: Date;
     attendees: User[];
+    comments: Comment[];
 }

@@ -35,15 +35,6 @@ a:hover {
   background-color: #424242; 
 }
 
-::-webkit-scrollbar {
-  width: 5px;
-  background-color: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: #67edae;
-  border-radius: 2px;
-}
-
 @media (min-width: 720px) {
   ::-webkit-scrollbar {
     width: 12px;

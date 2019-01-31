@@ -1,15 +1,47 @@
 @import 'src/app/sass/breakpoints.scss';
+.highlighted {
+    background-color: #ffffff2e;
+}
 
 .container {
     margin: $m;
+    .flexbox {
+        display: flex;
+        .input {
+            flex: 1 1 auto;
+            textarea {
+                ::-webkit-scrollbar {
+                    visibility: hidden;
+                    width: 0px !important;
+                }
+                resize: none;
+            }
+        }
+        .avatar {
+            display: flex;
+            margin-right: $s;
+            img {
+                height: 48px;
+                width: 48px;
+                border-radius: 50%;
+                margin-top: 18px;
+            }
+        }
+    }
+    mat-card-actions {
+        display: flex;
+        margin-bottom: $s;
+    }
 }
 
 .header {
     display: flex;
     width: 100%;
+    overflow: hidden;
     .avatar {
         border-radius: 50%;
         height: 64px;
+        width: 64px;
         margin: auto $m auto 0;
     }
     .title {
@@ -27,6 +59,18 @@
     }
 }
 
+#buttons {
+    display: none;
+}
+
 .body {
     margin-top: $l;
+}
+
+.header-image {
+    background-size: contain;
+}
+
+p {
+    overflow: hidden;
 }
