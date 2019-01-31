@@ -25,7 +25,7 @@
   <mat-card class="container highlighted">
     <form class="example-form">
       <div class="flexbox">
-        <div class="avatar"><img [src]="user.photoURL" alt="profilePicture"></div>
+        <div class="avatar"><img [src]="user.photoURL ? user.photoURL : '/assets/round-account-button-with-user-inside.svg'" alt="profilePicture"></div>
         <mat-form-field class="form-field input">
           <textarea id="textarea" matInput placeholder="Leave a comment" [formControl]="commentFormControl"></textarea>
         </mat-form-field>

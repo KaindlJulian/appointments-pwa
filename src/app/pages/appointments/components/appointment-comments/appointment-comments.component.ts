@@ -72,6 +72,9 @@ export class AppointmentCommentsComponent implements OnInit {
   comment() {
     const user = new User();
     user.name = this.user.displayName;
+    if (!this.user.displayName) {
+      user.name = this.user.email.substring(0, this.user.email.indexOf('@'));
+    }
     user.email = this.user.email;
     user.photoURL = this.user.photoURL;
 
